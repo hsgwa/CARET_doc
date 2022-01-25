@@ -42,7 +42,7 @@
     
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     
-      <link rel="stylesheet" href="https://unpkg.com/mermaid@8.0.0/dist/mermaid.css">
+      <link rel="stylesheet" href="https://unpkg.com/mermaid@8.13.10/dist/mermaid.css">
     
     <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"../..":"../.."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
     
@@ -908,6 +908,40 @@
     トレースポイントの紐付け
   </a>
   
+    <nav class="md-nav" aria-label="トレースポイントの紐付け">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    ノードの初期化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    エグゼキューターやコールバックグループの初期化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#publish" class="md-nav__link">
+    メッセージのpublishまで
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    メッセージの受信からコールバック実行まで
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1203,6 +1237,12 @@ LD_PRELOADは実行時の動的リンクに対しフックできる機能であ�
 <hr />
 <h3 id="dispatch_intra_process_subscription_callback">dispatch_intra_process_subscription_callback<a class="headerlink" href="#dispatch_intra_process_subscription_callback" title="Permanent link">#</a></h3>
 <p>[CARETフォーク実装]</p>
+<p>付加情報</p>
+<ul>
+<li>void * message</li>
+<li>void * callback</li>
+<li>uint64_t message_timestamp</li>
+</ul>
 <hr />
 <h3 id="rcl_publish">rcl_publish<a class="headerlink" href="#rcl_publish" title="Permanent link">#</a></h3>
 <p>[Galactic実装]</p>
@@ -1244,7 +1284,10 @@ LD_PRELOADは実行時の動的リンクに対しフックできる機能であ�
 </ul>
 <hr />
 <h2 id="_5">トレースポイントの紐付け<a class="headerlink" href="#_5" title="Permanent link">#</a></h2>
-<pre class="mermaid"><code>
+<p>本ページで列挙しているトレースポイントはノードID（<code>node_handle</code>）やコールバックID（<code>コールバックのインスタンスのアドレス</code>）などの値を元に紐付けて利用する。<br />
+それぞれのトレースポイントの対応関係をグラフで示す。</p>
+<h3 id="_6">ノードの初期化<a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
+<p><div class="mermaid">
 graph RL
   node_handle[[node_handle]]
   subscription_handle[[subscription_handle]]
@@ -1296,14 +1339,18 @@ graph RL
 
   callback &lt;--&gt; rclcpp_callback_register
   rmw_implementation
-</code></pre>
-<pre class="mermaid"><code>
+</div>
+コールバックのインスタンスのアドレス値が一意に決まれば、<code>timer_callback_added</code>など他のトレースポイントの値を紐付いていくことでノードの情報まで得ることができる。<br />
+逆に、node_handleが一意に決まれば、そのノードに含まれるコールバックも特定できる。</p>
+<h3 id="_7">エグゼキューターやコールバックグループの初期化<a class="headerlink" href="#_7" title="Permanent link">#</a></h3>
+<div class="mermaid">
 graph RL
   subscription_handle[[subscription_handle]]
   executor_addr[[executor_addr]]
   entities_collector_addr[[entities_collector_addr]]
   timer_handle[[timer_handle]]
   client_handle[[client_handle]]
+  service_handle[[service_handle]]
   callback_group_addr[[callback_group_addr]]
 
   construct_executor[construct_executor&lt;ul&gt;&lt;li&gt;executor_addr&lt;/li&gt;&lt;li&gt;executor_type_name&lt;/li&gt;&lt;/ul&gt;]
@@ -1341,18 +1388,18 @@ graph RL
   service_handle &lt;--&gt; callback_group_add_service
 
   callback_group_add_client &lt;--&gt; callback_group_addr
-  client_handle &lt;--&gt; callback_group_add_client</code></pre>
-<pre class="mermaid"><code>
+  client_handle &lt;--&gt; callback_group_add_client</div>
+<p>タイマーなどの各ハンドラはコールバックグループに追加され、エグゼキュータに紐付けられる。</p>
+<h3 id="publish">メッセージのpublishまで<a class="headerlink" href="#publish" title="Permanent link">#</a></h3>
+<div class="mermaid">
 graph LR
   source_timestamp[[source_timestamp]]
   message_dds[[message_addr]]
   message_intra[[message_addr]]
-  message_intra_sub[[message_addr]]
   message_inter[[message_addr]]
-  callback[[callback]]
   publish(("publish(message)"))
   source_timestamp[[source_timestamp]]
-  source_timestamp_sub[source_timestamp]
+  message_intra_sub[[message_addr]]
 
   rclcpp_intra_publish[rclcpp_intra_publish&lt;ul&gt;&lt;li&gt;publisher_handle&lt;/li&gt;&lt;li&gt;message_addr&lt;/li&gt;&lt;li&gt;message_timestamp&lt;/li&gt;&lt;/ul&gt;]
 
@@ -1366,52 +1413,69 @@ graph LR
   dds_bind_addr_to_addr[dds_bind_addr_to_addr&lt;ul&gt;&lt;li&gt;addr_from&lt;/li&gt;&lt;li&gt;addr_to&lt;/li&gt;&lt;/ul&gt;]
   dds_bind_addr_to_stamp[dds_bind_addr_to_stamp&lt;ul&gt;&lt;li&gt;message_addr&lt;/li&gt;&lt;li&gt;source_timestamp&lt;/li&gt;&lt;/ul&gt;]
 
-  dispatch_subscription_callback[dispatch_subscription_callback&lt;ul&gt;&lt;li&gt;message_addr&lt;/li&gt;&lt;li&gt;callback&lt;/li&gt;&lt;li&gt;source_timestamp&lt;/li&gt;&lt;li&gt;message_timestamp&lt;/li&gt;&lt;/ul&gt;]
+  publish --&gt;  rclcpp_intra_publish
+  publish --&gt;  rclcpp_publish
 
+  subgraph message_copy_if_necessary
+    rclcpp_intra_publish &lt;--&gt; message_intra
+    rclcpp_publish &lt;--&gt; message_inter
+    message_construct_intra -.-&gt; message_intra
+    message_intra -.-&gt; message_construct_intra
+    message_construct_inter -.-&gt; message_inter
+    message_inter -.-&gt; message_construct_inter
+  end
+
+
+  message_inter &lt;--&gt; rcl_publish
+  message_inter &lt;--&gt; dds_write
+  dds_write &lt;--&gt; message_dds
+
+  message_dds &lt;--&gt;  dds_bind_addr_to_stamp
+  dds_bind_addr_to_stamp &lt;--&gt; source_timestamp
+
+  dds_bind_addr_to_addr -.-&gt; message_dds
+  message_dds -.-&gt; dds_bind_addr_to_addr
+</div>
+<p><code>publish</code>を実行した際、unique_ptr型で複数のsubscriptionがある場合などのケースでは、必要に応じてメッセージのコピーが発生する。<br />
+メッセージのコピーが発生した際は<code>message_construct</code>でコピー前とコピー後の変数のアドレスを紐付けられるようにしている。<br />
+rclレイヤー以下ではメッセージのアドレスで対応付けられるようにし、DDSレイヤーでsource_timestampに紐付けられるようにしている。<br />
+source_timestampは元々はQoSのDeadlineなどに使われる値で、全てのDDS通信を行うメッセージに自動的に付与される値であり、subscription側で同じ値が受信される。<br />
+受信側ではsource_timestampの値を紐付けるための情報として利用している。</p>
+<p>message_addr（プロセス内通信）/source_timestamp（プロセス間通信）からpublishまでが一意に紐付けられる。</p>
+<h3 id="_8">メッセージの受信からコールバック実行まで<a class="headerlink" href="#_8" title="Permanent link">#</a></h3>
+<div class="mermaid">
+graph LR
+  source_timestamp[[source_timestamp]]
+  message_intra_sub[[message_addr]]
+  message_intra[[message_addr]]
+  callback[[callback]]
+  source_timestamp[[source_timestamp]]
+  source_timestamp_sub[source_timestamp]
+
+  dispatch_subscription_callback[dispatch_subscription_callback&lt;ul&gt;&lt;li&gt;message_addr&lt;/li&gt;&lt;li&gt;callback&lt;/li&gt;&lt;li&gt;source_timestamp&lt;/li&gt;&lt;li&gt;message_timestamp&lt;/li&gt;&lt;/ul&gt;]
   dispatch_intra_process_subscription_callback[dispatch_intra_process_subscription_callback&lt;ul&gt;&lt;li&gt;message_addr&lt;/li&gt;&lt;li&gt;callback&lt;/li&gt;&lt;li&gt;message_timestamp&lt;/li&gt;&lt;/ul&gt;]
 
   callback_end_[callback_end&lt;ul&gt;&lt;li&gt;callback&lt;/li&gt;&lt;/ul&gt;]
   callback_start[callback_start&lt;ul&gt;&lt;li&gt;callback&lt;/li&gt;&lt;li&gt;is_intra_process&lt;/li&gt;&lt;/ul&gt;]
 
 
-  subgraph publisher
-    publish --&gt;  rclcpp_intra_publish
-    publish --&gt;  rclcpp_publish
+  source_timestamp --Inter Process Communication--&gt; source_timestamp_sub
+  message_intra --Intra Process Communication--&gt; message_intra_sub
+  message_intra_sub --&gt; dispatch_intra_process_subscription_callback
 
-    subgraph message_copy_if_necessary
-      rclcpp_intra_publish &lt;--&gt; message_intra
-      rclcpp_publish &lt;--&gt; message_inter
-      message_construct_intra -.-&gt; message_intra
-      message_intra -.-&gt; message_construct_intra
-      message_construct_inter -.-&gt; message_inter
-      message_inter -.-&gt; message_construct_inter
-    end
+  dispatch_intra_process_subscription_callback --&gt; callback
 
+  callback --&gt; callback_start
+  callback --&gt; callback_end_
 
-    message_inter &lt;--&gt; rcl_publish
-    message_inter &lt;--&gt; dds_write
-    dds_write &lt;--&gt; message_dds
-
-    message_dds &lt;--&gt;  dds_bind_addr_to_stamp
-    dds_bind_addr_to_stamp &lt;--&gt; source_timestamp
-
-    dds_bind_addr_to_addr -.-&gt; message_dds
-    message_dds -.-&gt; dds_bind_addr_to_addr
-  end
-
-  subgraph subscription
-    source_timestamp --&gt; source_timestamp_sub
-    message_intra --Intra Process Communication--&gt; message_intra_sub
-    message_intra_sub --&gt; dispatch_intra_process_subscription_callback 
-
-    dispatch_intra_process_subscription_callback --&gt; callback
-
-    callback --&gt; callback_start
-    callback --&gt; callback_end_
-
-    dispatch_subscription_callback --&gt; callback
-    source_timestamp_sub --&gt; dispatch_subscription_callback
-  end</code></pre>
+  dispatch_subscription_callback --&gt; callback
+  source_timestamp_sub --&gt; dispatch_subscription_callback</div>
+<p>プロセス内通信ではpublishされたメッセージのアドレスで紐づけを行う。<br />
+プロセス間通信ではsource_timestampで紐づけを行う。</p>
+<p>callback_startからmessage_addr/source_timestampまでが一意に紐付けられる。<br />
+また、publisher側のグラフで示した通り、message_addr/source_timestampからpublishまでが一意に紐付けられる。<br />
+したがって、publishからcallback_startまでは一意に紐付けることができる。  </p>
+<p>ただし、コールバックの実行とpublishの紐付けはできていないので注意。</p>
 
               
             </article>
@@ -1487,9 +1551,9 @@ graph LR
     
       <script src="../../assets/javascripts/bundle.e0abf5b0.min.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="https://unpkg.com/mermaid@8.13.10/dist/mermaid.min.js"></script>
       
-        <script src="https://unpkg.com/mermaid@8.0.0/dist/mermaid.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       
     
   </body>
