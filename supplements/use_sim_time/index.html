@@ -775,7 +775,7 @@ ros2_caret:sim_time:
 <p>なお、sim_timeは<code>/clock</code>トピックがpublishされている間のみ記録されます。</p>
 <h2 id="sim_time_2">sim_timeを使った可視化<a class="headerlink" href="#sim_time_2" title="Permanent link">#</a></h2>
 <p><code>caret_analyze.plot</code>配下の可視化では、時間軸をsim_timeにした可視化が可能です。<br />
-最新版v.1.1では、<code>callback_sched</code>と<code>message_flow</code>がsim_timeの時刻を使用した可視化に対応しています。</p>
+最新版v.0.2.1では、<code>callback_sched</code>と<code>message_flow</code>がsim_timeの時刻を使用した可視化に対応しています。</p>
 <p><div class="highlight"><pre><span></span><code>def callback_sched(
     target: Union[Node, CallbackGroup, Executor],
     lstrip_s: float = 0,
