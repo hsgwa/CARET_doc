@@ -8,14 +8,14 @@
       
       
       
-        <link rel="canonical" href="https://tier4.github.io/CARET_doc/main/design/how_to_calculate_latency/">
+        <link rel="canonical" href="https://tier4.github.io/CARET_doc/main/tutorials/visualization/">
       
       <link rel="icon" href="../../assets/images/tier4.png">
       <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.8">
     
     
       
-        <title>レイテンシの算出方法 - Chain-Aware ROS Evaluation Tool (CARET)</title>
+        <title>Visualization - Chain-Aware ROS Evaluation Tool (CARET)</title>
       
     
     
@@ -72,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#performance-visualization" class="md-skip">
           Skip to content
         </a>
       
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              レイテンシの算出方法
+              Visualization
             
           </span>
         </div>
@@ -213,13 +213,15 @@
         
   
   
+    
+  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../../tutorials/installation/" class="md-tabs__link">
+      <a href="../installation/" class="md-tabs__link md-tabs__link--active">
         Tutorials
       </a>
     </li>
@@ -229,15 +231,13 @@
         
   
   
-    
-  
 
 
   
   
   
     <li class="md-tabs__item">
-      <a href="../architecture_overview/" class="md-tabs__link md-tabs__link--active">
+      <a href="../../design/architecture_overview/" class="md-tabs__link">
         Design
       </a>
     </li>
@@ -331,12 +331,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       
       
@@ -369,7 +371,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorials/installation/" class="md-nav__link">
+      <a href="../installation/" class="md-nav__link">
         Installation
       </a>
     </li>
@@ -383,7 +385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorials/measurement/" class="md-nav__link">
+      <a href="../measurement/" class="md-nav__link">
         Measurement
       </a>
     </li>
@@ -397,7 +399,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorials/configuration/" class="md-nav__link">
+      <a href="../configuration/" class="md-nav__link">
         Configuration
       </a>
     </li>
@@ -409,11 +411,66 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../tutorials/visualization/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Visualization
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Visualization
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-locate-trace-data-on-jupyter-notebook" class="md-nav__link">
+    How to locate trace data on Jupyter notebook
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#basic-api-to-get-latency" class="md-nav__link">
+    Basic API to get latency
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualizing-latency-of-node-chain-with-message-flow" class="md-nav__link">
+    Visualizing latency of node chain with message flow
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -431,14 +488,12 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       
       
@@ -471,7 +526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture_overview/" class="md-nav__link">
+      <a href="../../design/architecture_overview/" class="md-nav__link">
         Architecture overview
       </a>
     </li>
@@ -485,7 +540,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../supported_tracepoints/" class="md-nav__link">
+      <a href="../../design/supported_tracepoints/" class="md-nav__link">
         Supported tracepoints
       </a>
     </li>
@@ -499,7 +554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../diff/" class="md-nav__link">
+      <a href="../../design/diff/" class="md-nav__link">
         galacticとの差分
       </a>
     </li>
@@ -511,105 +566,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          レイテンシの算出方法
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../design/how_to_calculate_latency/" class="md-nav__link">
         レイテンシの算出方法
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    通信レイテンシとノードレイテンシの算出方法
-  </a>
-  
-    <nav class="md-nav" aria-label="通信レイテンシとノードレイテンシの算出方法">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    通信レイテンシの算出方法
-  </a>
-  
-    <nav class="md-nav" aria-label="通信レイテンシの算出方法">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    プロセス内通信
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    プロセス間通信
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    ノードレイテンシの算出方法
-  </a>
-  
-    <nav class="md-nav" aria-label="ノードレイテンシの算出方法">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    コールバックチェーンの利用
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -940,62 +901,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    通信レイテンシとノードレイテンシの算出方法
+  <a href="#how-to-locate-trace-data-on-jupyter-notebook" class="md-nav__link">
+    How to locate trace data on Jupyter notebook
   </a>
-  
-    <nav class="md-nav" aria-label="通信レイテンシとノードレイテンシの算出方法">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    通信レイテンシの算出方法
-  </a>
-  
-    <nav class="md-nav" aria-label="通信レイテンシの算出方法">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    プロセス内通信
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    プロセス間通信
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    ノードレイテンシの算出方法
-  </a>
-  
-    <nav class="md-nav" aria-label="ノードレイテンシの算出方法">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    コールバックチェーンの利用
+  <a href="#basic-api-to-get-latency" class="md-nav__link">
+    Basic API to get latency
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#visualizing-latency-of-node-chain-with-message-flow" class="md-nav__link">
+    Visualizing latency of node chain with message flow
+  </a>
   
 </li>
       
@@ -1011,300 +933,81 @@
             <article class="md-content__inner md-typeset">
               
                 
-  <a href="https://github.com/tier4/CARET_doc/edit/main/design/how_to_calculate_latency.md" title="Edit this page" class="md-content__button md-icon">
+  <a href="https://github.com/tier4/CARET_doc/edit/main/tutorials/visualization.md" title="Edit this page" class="md-content__button md-icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
   </a>
 
 
 
-<h1 id="_1">レイテンシの計算方法<a class="headerlink" href="#_1" title="Permanent link">#</a></h1>
-<h2 id="_2">通信レイテンシとノードレイテンシの算出方法<a class="headerlink" href="#_2" title="Permanent link">#</a></h2>
-<p>以下は通信レイテンシとノードレイテンシを表した図です。</p>
-<p><img alt="callback_and_node_latency" src="../../imgs/callback_and_node_latency.png" /></p>
-<p>ここでは通信レイテンシとノードレイテンシの算出方法について説明します。</p>
-<h3 id="_3">通信レイテンシの算出方法<a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
-<p>通信レイテンシはコールバックの publish の時刻と、後続のコールバックが開始した時刻の差分で計算しています。</p>
-<h4 id="_4">プロセス内通信<a class="headerlink" href="#_4" title="Permanent link">#</a></h4>
-<p>次の表はプロセス内通信のトレースに必要なトレースポイントと、そのトレースポイントの引数（トレースデータとして出力されるもの）です。※簡易版</p>
-<table>
-<thead>
-<tr>
-<th>トレースポイント名</th>
-<th>引数 1</th>
-<th>引数 2</th>
-<th>時刻</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>rclcpp_intra_publish</td>
-<td>publisher_handle_arg</td>
-<td><span style="color: red; ">message_arg</span></td>
-<td>time1</td>
-</tr>
-<tr>
-<td>dispatch_intra_process_subscription_callback</td>
-<td><span style="color: red; ">message_arg</span></td>
-<td><span style="color: green; ">callback_arg</span></td>
-<td>time2</td>
-</tr>
-<tr>
-<td>callback_start</td>
-<td><span style="color: green; ">callback_arg</span></td>
-<td>is_intra_process</td>
-<td>time3</td>
-</tr>
-</tbody>
-</table>
-<p>※<a href="../supported_tracepoints/">引数についてはこちらを参照</a></p>
-<p>message_arg と callback_arg にはメッセージのアドレス、コールバックのアドレスが格納されています。
-rclcpp_intra_publisher と dispatch_intra_process_subscription_callback は同じ message_arg を持つトレースポイント同士で紐づけ、dispatch_intra_process_subscription_callback と callback_start は同じ callback_arg を持つトレースポイント同士で紐づけることにより、下記のような表を作成します。
-最後に<code>callback_start - rclcpp_intra_publish</code>で<strong>プロセス内通信のレイテンシ</strong>を算出しています。</p>
-<table>
-<thead>
-<tr>
-<th>idx</th>
-<th>rclcpp_intra_publish</th>
-<th>dispatch_intra_process_subscription_callback</th>
-<th>callback_start</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>time1</td>
-<td>time2</td>
-<td>time3</td>
-</tr>
-<tr>
-<td>1</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-</tbody>
-</table>
-<h4 id="_5">プロセス間通信<a class="headerlink" href="#_5" title="Permanent link">#</a></h4>
-<p>以下はプロセス間通信のトレースポイントとその引数です。</p>
-<table>
-<thead>
-<tr>
-<th>トレースポイント名</th>
-<th>引数 1</th>
-<th>引数 2</th>
-<th>引数 3</th>
-<th>時刻</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>rclcpp_publish</td>
-<td>publisher_handle_arg</td>
-<td><span style="color: red; ">message_arg</span>@1</td>
-<td></td>
-<td>time1</td>
-</tr>
-<tr>
-<td>rcl_publish</td>
-<td>publisher_handle_arg</td>
-<td><span style="color: red; ">message_arg</span>@1</td>
-<td></td>
-<td>time2</td>
-</tr>
-<tr>
-<td>dds_write</td>
-<td>publisher_handle_arg</td>
-<td><span style="color: red; ">message_arg</span>@1</td>
-<td></td>
-<td>time3</td>
-</tr>
-<tr>
-<td>dds_bind_addr_to_stamp</td>
-<td><span style="color: red; ">message_arg</span>@1</td>
-<td><span style="color: green; ">stamp_arg</span></td>
-<td></td>
-<td>time4</td>
-</tr>
-<tr>
-<td>dispatch_subscription_callback</td>
-<td>messsage_arg@2</td>
-<td><span style="color: green; ">stamp_arg</span></td>
-<td><span style="color: blue; ">callback_arg</span></td>
-<td>time5</td>
-</tr>
-<tr>
-<td>callback_start</td>
-<td><span style="color: blue; ">callback_arg</span></td>
-<td>is_intra_process</td>
-<td></td>
-<td>time6</td>
-</tr>
-</tbody>
-</table>
-<p>プロセス内通信と同様に同じ引数を持つトレースポイント同士を紐づけていき、publish から callback_start までの表を作成します（下記表）。<br />
-1 行が 1 つのプロセス間通信のチェーンを表し、<code>callback_start - rclcpp_publish</code> にて<strong>プロセス間通信のレイテンシ</strong>を算出します。</p>
-<table>
-<thead>
-<tr>
-<th>idx</th>
-<th>rclcpp_publish</th>
-<th>rcl_publish</th>
-<th>dds_write</th>
-<th>dds_bind_addr_to_stamp</th>
-<th>dispatch_subscription_callback</th>
-<th>callback_start</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>time1</td>
-<td>time2</td>
-<td>time3</td>
-<td>time4</td>
-<td>time5</td>
-<td>time6</td>
-</tr>
-<tr>
-<td>1</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...　</td>
-</tr>
-</tbody>
-</table>
-<h2 id="_6">ノードレイテンシの算出方法<a class="headerlink" href="#_6" title="Permanent link">#</a></h2>
-<p>ノードレイテンシの算出方法は 2 つあります。
-それぞれの手法・長所・短所を説明します。</p>
-<h3 id="_7">コールバックチェーンの利用<a class="headerlink" href="#_7" title="Permanent link">#</a></h3>
-<p>コールバックレイテンシの測定は、同じコールバックアドレスを持つ callback_start と rclcpp_publish の差分を使って算出します。<br />
-callback_start と rclcpp_publish の紐づけは、rclcpp_publish から見て一番近い callback_start と紐づけます。</p>
-<table>
-<thead>
-<tr>
-<th>idx</th>
-<th>callback_start (cb_A) [s]</th>
-<th>rclcpp_publish (cb_A) [s]</th>
-<th>callback_end (cb_A) [s]</th>
-<th>callback_arg (cb_A)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>3</td>
-<td>4</td>
-<td>0x1000</td>
-</tr>
-<tr>
-<td>1</td>
-<td>2</td>
-<td>5</td>
-<td>6</td>
-<td>0x1000</td>
-</tr>
-<tr>
-<td>2</td>
-<td>4</td>
-<td>7</td>
-<td>8</td>
-<td>0x1000</td>
-</tr>
-<tr>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>idx</th>
-<th>callback_start (cb_B) [s]</th>
-<th>rclcpp_publish (cb_B) [s]</th>
-<th>callback_end (cb_B) [s]</th>
-<th>callback_arg (cb_B)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>4</td>
-<td>8</td>
-<td>9</td>
-<td>0x2000</td>
-</tr>
-<tr>
-<td>1</td>
-<td>8</td>
-<td>12</td>
-<td>13</td>
-<td>0x2000</td>
-</tr>
-<tr>
-<td>2</td>
-<td>10</td>
-<td>14</td>
-<td>15</td>
-<td>0x2000</td>
-</tr>
-</tbody>
-</table>
-<p>上記表のようにコールバック A・B（cb_A・cb_B）が存在し、A→B と処理が続く時、cb_A の callback_end と cb_B の callback_start を結び付けて表を作ります。<br />
-最後の callback だけは publish の時の時刻を採用し、下記表のように一つのテーブルにします。</p>
-<table>
-<thead>
-<tr>
-<th>idx</th>
-<th>callback_start (cb_A) [s]</th>
-<th>callback_end (cb_A) [s]</th>
-<th>callback_start (cb_B) [s]</th>
-<th>rclcpp_publish (cb_B) [s]</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>4</td>
-<td>4</td>
-<td>8</td>
-</tr>
-<tr>
-<td>1</td>
-<td>2</td>
-<td>6</td>
-<td>Lost</td>
-<td>Lost</td>
-</tr>
-<tr>
-<td>2</td>
-<td>4</td>
-<td>8</td>
-<td>8</td>
-<td>12</td>
-</tr>
-<tr>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-</tbody>
-</table>
-<p>上記のようにコールバックチェーンをつなぎ、<code>rclcpp_publish (cb_X) - callback_start (cb_Y)</code>で<strong>ノードレイテンシ</strong>を算出します。</p>
-<blockquote>
-<p>※ノード内にコールバックが１つの場合、X, Y は同じものを指します。<br />
-複数コールバックがある場合は、X が最後・Y が最初のコールバックを指します。</p>
-</blockquote>
+<h1 id="performance-visualization">Performance visualization<a class="headerlink" href="#performance-visualization" title="Permanent link">#</a></h1>
+<p>CARET serves Python APIs to visualize trace data for users to analyze applications' performance.
+This section will show basic flow to visualize data with Jupyter notebook.</p>
+<h2 id="how-to-locate-trace-data-on-jupyter-notebook">How to locate trace data on Jupyter notebook<a class="headerlink" href="#how-to-locate-trace-data-on-jupyter-notebook" title="Permanent link">#</a></h2>
+<ol>
+<li>
+<p>Launching <code>jupyter-lab</code>
+   Launch <code>jupyter-lab</code> at first for learning how to visualize trace data.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span> ~/ros2_ws/evaluate
+
+<span class="nb">source</span> ~/ros2_caret_ws/install/setup.bash
+jupyter-lab
+</code></pre></div>
+<p>CARET uses <a href="https://bokeh.org/"><code>bokeh</code></a> for some visualization APIs.
+ Execute the following code for loading <code>bokeh</code></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_notebook</span>
+<span class="n">output_notebook</span><span class="p">()</span>
+</code></pre></div>
+</li>
+<li>
+<p>Loading trace data onto Jupyter notebook</p>
+<p>Locate trace data on Jupyter notebook as well as the architecture file.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">caret_analyze</span> <span class="kn">import</span> <span class="n">Architecture</span><span class="p">,</span> <span class="n">Application</span><span class="p">,</span> <span class="n">Lttng</span>
+
+<span class="c1"># load the architecture file which is created in the previous page</span>
+<span class="n">arch</span> <span class="o">=</span> <span class="n">Architecture</span><span class="p">(</span><span class="s1">&#39;yaml&#39;</span><span class="p">,</span> <span class="s1">&#39;./architecture.yaml&#39;</span><span class="p">)</span>
+
+<span class="c1"># load measured data by CARET</span>
+<span class="n">lttng</span> <span class="o">=</span> <span class="n">Lttng</span><span class="p">(</span><span class="s1">&#39;./e2e_sample&#39;</span><span class="p">)</span>
+
+<span class="c1"># map the application architecture to measured data</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Application</span><span class="p">(</span><span class="n">arch</span><span class="p">,</span> <span class="n">lttng</span><span class="p">)</span>
+</code></pre></div>
+<p>After execution of the code, users will often refer to the <code>app</code> object defined as <code>Application</code> class. The <code>app</code> objects provides users latency of callbacks, communication, and paths. <code>Application</code> class is similar to <code>Architecture</code> class which describes structure of the application and their interfaces are similar. In addition, <code>Application</code> class has interfaces to get latency.</p>
+</li>
+</ol>
+<h2 id="basic-api-to-get-latency">Basic API to get latency<a class="headerlink" href="#basic-api-to-get-latency" title="Permanent link">#</a></h2>
+<p>This section will explain APIs to get callback latency. The following code is one of examples to get callback latency.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Get a callback instance, which has latency information, from app</span>
+<span class="n">callback</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_callback</span><span class="p">(</span><span class="s1">&#39;/timer_driven_node/callback_0&#39;</span><span class="p">)</span>
+
+<span class="c1"># Get time-series variation of latency</span>
+<span class="n">t</span><span class="p">,</span> <span class="n">latency_ns</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">to_timeseries</span><span class="p">()</span>
+
+<span class="c1"># Get histogram of latency</span>
+<span class="n">bins</span><span class="p">,</span> <span class="n">latency_ns</span> <span class="o">=</span> <span class="n">callback</span><span class="o">.</span><span class="n">to_histogram</span><span class="p">()</span>
+</code></pre></div>
+<p>Though this example shows callback latency, CARET serves API to get communication latency.
+<code>callback.to_dataframe()</code> will provides <code>pandas.DataFrame</code> based object including raw timestamps which is obtained from tracepoints.</p>
+<p><prettier-ignore-start></p>
+<div class="admonition todo">
+<p class="admonition-title">Todo<p>Sorry for not providing CARET's API list, but we'll provide it in the near future.</p>
+</p>
+</div>
+<p><prettier-ignore-end></p>
+<h2 id="visualizing-latency-of-node-chain-with-message-flow">Visualizing latency of node chain with message flow<a class="headerlink" href="#visualizing-latency-of-node-chain-with-message-flow" title="Permanent link">#</a></h2>
+<p>CARET provides some APIs to visualize measured data.
+With message flow, which is one of effective visualizations, users can understand what happens and where is bottleneck in target applications.
+Execute the following code for visualization with message flow.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">caret_analyze.plot</span> <span class="kn">import</span> <span class="n">message_flow</span>
+
+<span class="n">path</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_path</span><span class="p">(</span><span class="s1">&#39;target_path&#39;</span><span class="p">)</span>
+<span class="n">message_flow</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div>
+<p>The following figure will appear if <code>message_flow</code> method is successful.</p>
+<p><img alt="message_flow_sample" src="../../imgs/message_flow_with_cursor.png" /></p>
+<p>The horizontal axis shows time line. On the other hand, the vertical axis shows elements of the node chain (<code>target_path</code>), which include callback functions and topic messages from input to output. Each colorful line shows how a certain input message is propagated to callback functions and topic communications. Gray rectangles show execution timing of callback functions.</p>
+<p>If your mouse pointer is put over one of gray rectangles, latency of callback functions will be shown. You can find latency of a target node chain as well if you put the mouse pointer onto one of colorful lines.</p>
+<p>CARET serves other APIs for visualization. Refer to <a href="../../tips/gallery/">ギャラリー</a> for more details.</p>
 
               
             </article>
@@ -1325,7 +1028,7 @@ callback_start と rclcpp_publish の紐づけは、rclcpp_publish から見て�
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../diff/" class="md-footer__link md-footer__link--prev" aria-label="Previous: galacticとの差分" rel="prev">
+        <a href="../configuration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configuration" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1334,20 +1037,20 @@ callback_start と rclcpp_publish の紐づけは、rclcpp_publish から見て�
               <span class="md-footer__direction">
                 Previous
               </span>
-              galacticとの差分
+              Configuration
             </div>
           </div>
         </a>
       
       
         
-        <a href="../../tips/gallery/" class="md-footer__link md-footer__link--next" aria-label="Next: ギャラリー" rel="next">
+        <a href="../../design/architecture_overview/" class="md-footer__link md-footer__link--next" aria-label="Next: Architecture overview" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              ギャラリー
+              Architecture overview
             </div>
           </div>
           <div class="md-footer__button md-icon">
