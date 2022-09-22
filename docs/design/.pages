@@ -1,16 +1,24 @@
 nav:
     - Design: index.md
     - Software architecture:
-        - overview: design/software_architecture/overview
+        - Overview: design/software_architecture/overview
         - caret_analyze: design/software_architecture/caret_analyze
         - caret_trace: design/software_architecture/caret_trace
-    - Trace points:
-        - Defined Tracepoints: design/trace_points/defined_tracepoints
-        - Diff(galactic): design/trace_points/diff_galactic
-        - Diff(humble): design/trace_points/diff_humble
+        - tilde: design/software_architecture/tilde
+    - Runtime Processing:
+        - Overview: design/runtime_processing/overview
+        - Hook: design/runtime_processing/hook
+        - Tracepoint filtering: design/runtime_processing/filter_trace_points
     - Processing trace data:
         - Records: design/processing_trace_data/records
         - Response time: design/processing_trace_data/response_time
+    - Tracepoints:
+        - Overview: design/trace_points/overview
+        - Initialization tracepoints: design/trace_points/initialization_trace_points
+        - Runtime tracepoints: design/trace_points/runtime_trace_points
+        - Message tracking: design/trace_points/message_tracking
+        - Diff(galactic): design/trace_points/diff_galactic
+        - Diff(humble): design/trace_points/diff_humble
     - Latency definitions:
         - Callback Latency: design/latency_definitions/callback_latency
         - Communication Latency: design/latency_definitions/communication_latency

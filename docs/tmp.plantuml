@@ -1,0 +1,39 @@
+
+participant "UserCode\n(Publisher Side)" as Callback
+participant Rclcpp
+participant Buffer
+participant rcl
+participant LTTng
+
+== Publisher ==
+
+-> Callback
+activate Callback
+
+Callback -> Rclcpp : publish
+activate Rclcpp
+Rclcpp -> LTTng : intra process publish
+
+Rclcpp -> Buffer : enqueue
+activate Buffer
+Rclcpp -> rcl : notify
+deactivate Rclcpp
+activate rcl
+
+deactivate Callback
+
+== Subscription ==
+
+rcl -> Rclcpp : dispatch
+deactivate rcl
+
+activate Rclcpp
+
+Rclcpp -> Buffer : take
+Buffer -> Rclcpp: dequeue
+deactivate Buffer
+
+Rclcpp -> LTTng : callback start
+Rclcpp -> Callback : execute callback
+
+activate Callback
