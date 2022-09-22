@@ -8,7 +8,7 @@ nav:
     - Runtime Processing:
         - Overview: design/runtime_processing/overview
         - Hook: design/runtime_processing/hook
-        - Tracepoint filtering: design/runtime_processing/filter_trace_points
+        - Tracepoint filtering: design/runtime_processing/tracepoint_filtering
     - Processing trace data:
         - Records: design/processing_trace_data/records
         - Response time: design/processing_trace_data/response_time
@@ -17,8 +17,7 @@ nav:
         - Initialization tracepoints: design/trace_points/initialization_trace_points
         - Runtime tracepoints: design/trace_points/runtime_trace_points
         - Message tracking: design/trace_points/message_tracking
-        - Diff(galactic): design/trace_points/diff_galactic
-        - Diff(humble): design/trace_points/diff_humble
+        - Differences from original ROS: design/trace_points/diff
     - Latency definitions:
         - Callback Latency: design/latency_definitions/callback_latency
         - Communication Latency: design/latency_definitions/communication_latency

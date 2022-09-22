@@ -18,3 +18,6 @@ CARET は以下を行います。
 - ソフトウェアアーキテクチャ
 - レイテンシの定義
 - 制限
+
+なお、各クラスの API については以下をご覧ください。
+[CADRET analyze API document](https://tier4.github.io/CARET_analyze/)

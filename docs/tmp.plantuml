@@ -1,7 +1,7 @@
 
 participant "UserCode\n(Publisher Side)" as Callback
-participant Rclcpp
-participant Buffer
+participant "rclcpp\n (Publisher/Subscription)" as Rclcpp
+participant "rclcpp\n (Buffer)" as Buffer
 participant rcl
 participant LTTng
 
