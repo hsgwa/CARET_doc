@@ -3,58 +3,163 @@ Some tracepoints share a same identification, such as a node ID (`node_handle`) 
 ### Tracepoints for representing structure of a node
 
 ```mermaid
+erDiagram
+ rcl_init{
+ address context_handle
+ }
 
-graph RL
-  node_handle[[node_handle]]
-  subscription_handle[[subscription_handle]]
-  subscription[[subscription]]
-  callback[[callback]]
-  timer_handle[[timer_handle]]
-  client_handle[[client_handle]]
-  node_handle[[node_handle]]
-  publisher_handle[[publisher_handle]]
+ rcl_node_init{
+ address node_handle
+ address rmw_handle
+ string node_name
+ string node_namespace
+ }
 
-  rcl_init[rcl_init<ul><li>context_handle</li></ul>]
+ rcl_publisher_init{
+ address publisher_handle
+ address node_handle
+ address rmw_publisher_handle
+ string topic_name
+ size_t queue_depth
+ }
 
-  rcl_node_init[rcl_node_init<br /><ul><li>node_handle</li><li>node_name</li><li>node_namespace</li><li>rmw_handle</li></ul>]
+ rcl_subscription_init{
+ address subscription_handle
+ address node_handle
+ address rmw_subscription_handle
+ string topic_name
+ size_t queue_depth
+ }
 
-  rcl_publisher_init[rcl_publisher_init<br /><ul><li>node_handle</li><li>publisher_handle</li><li>rmw_publisher_handle</li><li>topic_name</li><li>queue_depth</li></ul>]
+ rclcpp_subscription_init{
+ address subscription_handle
+ address subscription
+ }
 
-  rcl_subscription_init[rcl_subscription_init<ul><li>subscription_handle</li><li>node_handle</li><li>rmw_subscription_handle</li><li>topic_name</li><li>queue_depth</li></ul>]
+ rclcpp_subscription_callback_added{
+ address subscription
+ address callback
+ }
 
-  rclcpp_subscription_init[rclcpp_subscription_init<ul><li>subscription_handle</li><li>subscription</li></ul>]
+ rcl_timer_init{
+ address timer_handle
+ int64_t period
+ }
 
-  rclcpp_subscription_callback_added[rclcpp_subscription_callback_added<ul><li>subscription</li><li>callback</li></ul>]
+ rclcpp_timer_callback_added{
+ address timer_handle
+ address callback
+ }
 
-  rclcpp_timer_link_node[rclcpp_timer_link_node<ul><li>timer_handle</li><li>node_handle</li></ul>]
+ rclcpp_timer_link_node{
+ address timer_handle
+ address node_handle
+ }
 
-  rclcpp_callback_register[rclcpp_callback_register<ul><li>callback</li><li>function_symbol</li></ul>]
+ rclcpp_callback_register{
+ address callback
+ string function_symbol
+ }
 
-  rmw_implementation[rmw_implementation<ul><li>rmw_impl</li></ul>]
+ rmw_implementation{
+ string rmw_impl
+ }
 
-  rcl_timer_init[rcl_timer_init<ul><li>timer_handle</li><li>period</li></ul>]
+    rcl_node_init ||--|| rcl_publisher_init : node_handle
+    rcl_node_init ||--|| rcl_subscription_init : node_handle
+    rcl_node_init ||--|| rclcpp_timer_link_node : node_handle
+
+    rcl_node_init ||--|| rcl_publisher_init : node_handle
+    rcl_node_init ||--|| rcl_subscription_init : node_handle
+    rcl_node_init ||--|| rclcpp_timer_link_node : node_handle
 
 
-  rcl_publisher_init <--> node_handle
-  node_handle <--> rcl_node_init
-  rcl_subscription_init <--> node_handle
-  subscription_handle <--> rcl_subscription_init
-  rclcpp_subscription_init <--> subscription_handle
+    rcl_publisher_init ||--|| PUBLISHER_HANDLE : node_handle
+    rcl_subscription_init ||--|| SUBSCRIPTION_HANDLE : node_handle
+    rcl_timer_init ||--|| TIMER_HANDLE : node_handle
 
-  publisher_handle <--> rcl_publisher_init
+    rcl_subscription_init ||--|| rclcpp_subscription_init : subscription_handle
+    rclcpp_subscription_init ||--|| rclcpp_subscription_callback_added: subscription
 
-  subscription <--> rclcpp_subscription_init
-  rclcpp_subscription_callback_added <--> subscription
-  callback <--> rclcpp_subscription_callback_added
+    rclcpp_timer_callback_added ||--|| rclcpp_callback_register: callback
+    rclcpp_subscription_callback_added ||--|| rclcpp_callback_register: callback
 
-  rcl_timer_init <--> timer_handle
-  rclcpp_timer_callback_added <--> timer_handle
-  callback <-->  rclcpp_timer_callback_added
-  timer_handle <--> rclcpp_timer_link_node
-  rclcpp_timer_link_node <--> node_handle
+    rclcpp_timer_callback_added ||--|| rcl_timer_init : timer_handle
+    rclcpp_timer_link_node ||--|| rcl_timer_init: timer_handle
 
-  callback <--> rclcpp_callback_register
-  rmw_implementation
+
+
+
+
+
+
+
+
+```
+
+```mermaid
+erDiagram
+ construct_executor{
+ address executor_addr
+ string executor_type_name
+ }
+
+ construct_static_executor{
+ address executor_addr
+ address entities_collector_addr
+ string executor_type_name
+ }
+
+ add_callback_group{
+ address executor_addr
+ address callback_group_addr
+ string group_type_name
+ }
+
+ add_callback_group_static_executor{
+ address entities_collector_addr
+ address callback_group_addr
+ string group_type_name
+ }
+
+ callback_group_add_timer{
+ address callback_group_addr
+ address timer_handle
+ }
+
+ callback_group_add_subscription{
+ address callback_group_addr
+ address subscription_handle
+ }
+
+ callback_group_add_service{
+ address callback_group_addr
+ address service_handle
+ }
+
+ callback_group_add_client{
+ address callback_group_addr
+ address client_handle
+ }
+
+
+ construct_executor ||--|| add_callback_group : executor_addr
+ construct_static_executor ||--|| add_callback_group_static_executor : entities_collector_addr
+
+    add_callback_group_static_executor ||--|| callback_group_add_timer : callback_group_addr
+    add_callback_group_static_executor ||--|| callback_group_add_subscription : callback_group_addr
+    add_callback_group_static_executor ||--|| callback_group_add_service : callback_group_addr
+    add_callback_group_static_executor ||--|| callback_group_add_client : callback_group_addr
+    add_callback_group ||--|| callback_group_add_timer : callback_group_addr
+    add_callback_group ||--|| callback_group_add_subscription : callback_group_addr
+    add_callback_group ||--|| callback_group_add_service : callback_group_addr
+    add_callback_group ||--|| callback_group_add_client : callback_group_addr
+
+     callback_group_add_timer ||--|| TIMER_HANDLE : callback_group_addr
+    callback_group_add_subscription ||--|| SUBSCRIPTION_HANDLE : callback_group_addr
+    callback_group_add_service ||--|| SERVICE_HANDLE : callback_group_addr
+    callback_group_add_client ||--|| CLIENT_HANDLE : callback_group_addr
+
 
 ```
 
@@ -62,55 +167,6 @@ If a certain of address of callback instance is unique, scanning the shared iden
 On the other hand, if `node_handle` is identified uniquely, callback in the node is identified as well.
 
 ### Tracepoints for representing structure of executor and callback group
-
-```mermaid
-
-graph RL
-  subscription_handle[[subscription_handle]]
-  executor_addr[[executor_addr]]
-  entities_collector_addr[[entities_collector_addr]]
-  timer_handle[[timer_handle]]
-  client_handle[[client_handle]]
-  service_handle[[service_handle]]
-  callback_group_addr[[callback_group_addr]]
-
-  construct_executor[construct_executor<ul><li>executor_addr</li><li>executor_type_name</li></ul>]
-
-  construct_static_executor[construct_static_executor<ul><li>executor_addr</li><li>executor_type_name</li><li>entities_collector_addr</li></ul>]
-
-  add_callback_group[add_callback_group<ul><li>executor_addr</li><li>callback_group_addr</li><li>group_type_name</li></ul>]
-
-  add_callback_group_static_executor[add_callback_group_static_executor<ul><li>entities_collector_addr</li><li>callback_group_addr</li><li>group_type_name</li></ul>]
-
-  callback_group_add_timer[callback_group_add_timer<ul><li>callback_group_addr</li><li>timer_handle</li></ul>]
-
-  callback_group_add_subscription[callback_group_add_subscription<ul><li>callback_group_addr</li><li>subscription_handle</li></ul>]
-
-  callback_group_add_service[callback_group_add_service<ul><li>callback_group_addr</li><li>service_handle</li></ul>]
-
-
-  callback_group_add_client[callback_group_add_client<ul><li>callback_group_addr</li><li>client_handle</li></ul>]
-
-  executor_addr <--> construct_executor
-  entities_collector_addr <--> construct_static_executor
-  add_callback_group <--> executor_addr
-  callback_group_addr <--> add_callback_group
-
-  add_callback_group_static_executor <--> entities_collector_addr
-  callback_group_addr <--> add_callback_group_static_executor
-
-  callback_group_add_timer <--> callback_group_addr
-  timer_handle <--> callback_group_add_timer
-
-  callback_group_add_subscription <--> callback_group_addr
-  subscription_handle <--> callback_group_add_subscription
-
-  callback_group_add_service <--> callback_group_addr
-  service_handle <--> callback_group_add_service
-
-  callback_group_add_client <--> callback_group_addr
-  client_handle <--> callback_group_add_client
-```
 
 A handler such as `timer_handle` and `subscription_handle` are assigned to a callback group. A callback group belongs to an executor.
 

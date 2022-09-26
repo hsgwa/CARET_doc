@@ -1,50 +1,72 @@
 ### Tracepoints for representing flow of message transmission
 
 ```mermaid
+erDiagram
 
-graph LR
-  source_timestamp[[source_timestamp]]
-  message_dds[[message_addr]]
-  message_intra[[message_addr]]
-  message_inter[[message_addr]]
-  publish(("publish(message)"))
-  source_timestamp[[source_timestamp]]
-  message_intra_sub[[message_addr]]
+ callback_start{
+ address callback
+ bool is_intra_process
+ }
 
-  rclcpp_intra_publish[rclcpp_intra_publish<ul><li>publisher_handle</li><li>message_addr</li><li>message_timestamp</li></ul>]
+ callback_end{
+ address callback
+ }
 
-  message_construct_intra[message_construct<ul><li>original_message_addr</li><li>constructed_message_addr</li></ul>]
-  message_construct_inter[message_construct<ul><li>original_message_addr</li><li>constructed_message_addr</li></ul>]
+ message_construct{
+ address original_message
+ address constructed_message
+ }
 
-  rclcpp_publish[rclcpp_publish<ul><li>publisher_handle</li><li>message_addr</li><li>message_timestamp</li></ul>]
+ rclcpp_intra_publish{
+ address publisher_handle
+ address message
+ uint64_t message_timestamp
+ }
 
-  rcl_publish[rcl_publish<ul><li>publisher_handle</li><li>message_addr</li></ul>]
-  dds_write[dds_write<ul><li>message_addr</li></ul>]
-  dds_bind_addr_to_addr[dds_bind_addr_to_addr<ul><li>addr_from</li><li>addr_to</li></ul>]
-  dds_bind_addr_to_stamp[dds_bind_addr_to_stamp<ul><li>message_addr</li><li>source_timestamp</li></ul>]
+ dispatch_subscription_callback{
+ address message
+ address callback
+ uint64_t source_timestamp
+ uint64_t message_timestamp
+ }
 
-  publish -->  rclcpp_intra_publish
-  publish -->  rclcpp_publish
+ dispatch_intra_process_subscription_callback{
+ address message
+ address callback
+ uint64_t message_timestamp
+ }
 
-  subgraph message_copy_if_necessary
-    rclcpp_intra_publish <--> message_intra
-    rclcpp_publish <--> message_inter
-    message_construct_intra -.-> message_intra
-    message_intra -.-> message_construct_intra
-    message_construct_inter -.-> message_inter
-    message_inter -.-> message_construct_inter
-  end
+ rcl_publish{
+ address publisher_handle
+ address message
+ }
+
+ rclcpp_publish{
+ address publisher_handle
+ address message
+ uint64_t message_timestamp
+ }
+
+ dds_write{
+ address message
+ }
+
+ dds_bind_addr_to_stamp{
+ address addr
+ uint64_t source_stamp
+ }
+
+    rclcpp_intra_publish ||--|| dispatch_intra_process_subscription_callback: message_addr
+    rclcpp_publish ||--|| rcl_publish: message_addr
+    rcl_publish ||--|| dds_write: message_addr
+    dds_write ||--|| dds_bind_addr_to_stamp: message_addr
+
+    dds_bind_addr_to_stamp ||--|| dispatch_subscription_callback: source_timestamp
 
 
-  message_inter <--> rcl_publish
-  message_inter <--> dds_write
-  dds_write <--> message_dds
-
-  message_dds <-->  dds_bind_addr_to_stamp
-  dds_bind_addr_to_stamp <--> source_timestamp
-
-  dds_bind_addr_to_addr -.-> message_dds
-  message_dds -.-> dds_bind_addr_to_addr
+    dispatch_intra_process_subscription_callback ||--|| callback_start: callback
+    dispatch_subscription_callback ||--|| callback_start: callback
+    callback_start ||--|| callback_end: callback
 
 ```
 
@@ -57,36 +79,6 @@ CARET utilizes `source_timestamp` to map transmitted message to received one.
 CARET maps a `message_addr` to a published message for intra-process communication, and a `source_timestamp` to one for inter-communication.
 
 ### Tracepoints for representing flow of callback execution after message reception
-
-```mermaid
-
-graph LR
-  source_timestamp[[source_timestamp]]
-  message_intra_sub[[message_addr]]
-  message_intra[[message_addr]]
-  callback[[callback]]
-  source_timestamp[[source_timestamp]]
-  source_timestamp_sub[source_timestamp]
-
-  dispatch_subscription_callback[dispatch_subscription_callback<ul><li>message_addr</li><li>callback</li><li>source_timestamp</li><li>message_timestamp</li></ul>]
-  dispatch_intra_process_subscription_callback[dispatch_intra_process_subscription_callback<ul><li>message_addr</li><li>callback</li><li>message_timestamp</li></ul>]
-
-  callback_end_[callback_end<ul><li>callback</li></ul>]
-  callback_start[callback_start<ul><li>callback</li><li>is_intra_process</li></ul>]
-
-
-  source_timestamp --Inter Process Communication--> source_timestamp_sub
-  message_intra --Intra Process Communication--> message_intra_sub
-  message_intra_sub --> dispatch_intra_process_subscription_callback
-
-  dispatch_intra_process_subscription_callback --> callback
-
-  callback --> callback_start
-  callback --> callback_end_
-
-  dispatch_subscription_callback --> callback
-  source_timestamp_sub --> dispatch_subscription_callback
-```
 
 As well as flow of message transmission, a message is identified by `message_addr` for intra-process communication, but `source_timestamp` for inter-process communication.
 

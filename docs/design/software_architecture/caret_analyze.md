@@ -2,13 +2,20 @@
 
 caret_analyze はトレースデータやアーキテクチャファイル読み込み、デベロッパーに Python API を提供するパッケージです
 
-CARET_analyze のデータの流れをいかに示します。
+なお、各クラスの API については以下をご覧ください。
+[CADRET analyze API document](https://tier4.github.io/CARET_analyze/)
+
+CARET_analyze のデータの流れを以下に示します。
 
 ![caret_analyze_architecture](../../imgs/architecture_caret_analyze.png)
 
 Architecture object includes description of target application's structure. This object can be reused unless structure of the target application or name of the components is changed. Runtime Data object has data sampled during execution of the target application. The sampled data includes timestamps, whose value are different per execution, obtained from tracepoints.
 
-Architecture object and Runtime Data object are implemented as Python-based classes. The structure of their classes are designed based on the structure of ROS applications which are constructed of executors, nodes, callback functions, and topic messages. ROS-based structure makes CARET's API friendly for ROS users. They are able to find target nodes, topic messages, or executors if they know their application structure.
+Architecture object and Runtime Data object are implemented as Python classes. The structure of their classes are designed based on the structure of ROS applications which are constructed of executors, nodes, callback functions, and topic messages. ROS-based structure makes CARET's API friendly for ROS users. They are able to find target nodes, topic messages, or executors if they know their application structure.
+
+CARET_analyze は複数の python パッケージで構成されています。
+
+それぞれのパッケージの役割については、以下に示したとおりです。
 
 | python package | role                             |
 | -------------- | -------------------------------- |
@@ -19,8 +26,6 @@ Architecture object and Runtime Data object are implemented as Python-based clas
 | records        | レイテンシ算出の基礎処理         |
 | common         | 共通処理                         |
 | infra          | 読み込み                         |
-
-infra 以外は CARET だけに依存するようにつくっています。
 
 各コンポーネントの主な関係は以下の通りです。
 
@@ -230,19 +235,99 @@ CallbackBase o-d- Subscription
 Executor o-- CallbackGroup
 ```
 
+### Application
+
+計測対象の全てにアクセス可能なクラスです。
+
+See also: [Application API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.Application)
+
+### Executor
+
+Executor に関連したクラスです。
+
+See also: [Executor API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.Executor)
+
+### Node
+
+Executor に関連したクラスです。
+
+See also: [Node API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.Node)
+
+### Path
+
+| column         | type |
+| -------------- | ---- |
+| rclcpp publish |      |
+
+See also: [Path API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.Path)
+
+### NodePath
+
+| column         | type |
+| -------------- | ---- |
+| rclcpp publish |      |
+
+See also: [NodePath API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.NodePath)
+
+### Communication
+
+| column         | type |
+| -------------- | ---- |
+| rclcpp publish |      |
+
+See also: [Communication API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.Communication)
+
+### VariablePassing
+
+| column         | type |
+| -------------- | ---- |
+| rclcpp publish |      |
+
+See also: [VariablePassing API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.VariablePassing)
+
+### Timer
+
+| column         | type |
+| -------------- | ---- |
+| rclcpp publish |      |
+
+See also: [Timer API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.Timer)
+
+### Subscription
+
+| column         | type |
+| -------------- | ---- |
+| rclcpp publish |      |
+
+See also: [Subscription API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.Subscription)
+
+### Publisher
+
+| column         | type |
+| -------------- | ---- |
+| rclcpp publish |      |
+
+See also: [Publisher API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.Publisher)
+
 ## value_objects
 
 ValueObjects では、同値性の持ったクラスを定義しています。
-トレースデータに近い情報しか持たない Value クラスと、複数のクラスで構造を有する StructValue が定義されています。
+紐付けのための情報を持つ Value クラスと、紐付け後を行い複数のクラスで構造を有する StructValue が定義されています。
 
 ## plot
 
 表示に関連したクラスがあります。
 
+CARET_analyze が提供する可視化では、bokeh や graphviz をベースとしています。
+
+Plot 関連の設計については[Visualizations](../visualizations/policy.md)をご覧ください。
+
 ## records
 
 CARET ではレイテンシの算出はテーブルの独自の結合処理によって行います。
 records パッケージでは、独自の結合処理を持ったテーブルを定義しています。
+
+records 内で行われる処理の内容については[Records](../processing_trace_data/records.md)をご覧ください。
 
 ## common
 
@@ -251,3 +336,4 @@ records パッケージでは、独自の結合処理を持ったテーブルを
 ## infra
 
 外部から読み取る処理を記述しています。
+infra 以外は CARET だけに依存するようにつくっています。
