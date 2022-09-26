@@ -4,12 +4,24 @@ This section explains an overview of software architecture of CARET.
 
 ![architecture](../../imgs/architecture.drawio.png)
 
-Architecture object serves APIs to search node chains and define node latency as mentioned in [tutorial/architecture file section](../tutorials/configuration.md). Architecture object is reusable after it is saved as a YAML-based file called "architecture file".  
-Runtime Data object serves APIs to retrieve `pandas.DataFrame`-based objects including callback latency or communication. Users can analyze temporal aspects of their applications, with visualization, as they expect. APIs for visualization are also served by CARET_analyze which plays main role to analyze trace data.
+CARET は ROS2 に組み込まれたトレースポイントに加え、いくつかの方法によりトレースポイントを追加します; CARET_trace, CARET_rclcpp, TILDE
+柔軟性をもたせるために、可能な限りフックによるトレースポイントの追加を行い、補助的に他の方法でトレースポイントを追加しています。
 
-A set of trace data is divided into two sections by CARET_analyze package after loading trace data; Architecture and Runtime Data. Architecture object includes description of target application's structure. This object can be reused unless structure of the target application or name of the components is changed. Runtime Data object has data sampled during execution of the target application. The sampled data includes timestamps, whose value are different per execution, obtained from tracepoints.
+トレースポイントで取得した情報は、TraceData として全て保存されます。
 
-Architecture object and Runtime Data object are implemented as Python-based classes. The structure of their classes are designed based on the structure of ROS applications which are constructed of executors, nodes, callback functions, and topic messages. ROS-based structure makes CARET's API friendly for ROS users. They are able to find target nodes, topic messages, or executors if they know their application structure.
+A set of trace data is divided into two sections by CARET_analyze package after loading trace data; Architecture and Runtime Data.
+
+Architecture データはパスの定義などを記述しています。
+評価対象のパスの定義などは、デベロッパーが指定する必要があります。
+一度設定した Architecture 情報は yaml ファイルとして保存し、次回から使用が可能です。
+
+Runtime Data は測定値など測定毎に変化する情報です。
+実行時の情報は事前に定義した Architecture 情報と結び付けられ、評価しやすい形の python-API としてデベロッパーに提供されます。
+
+CARET_analyze は PythonAPI を提供することが重要な役割としてありますが、
+jupyter 上での評価を簡単にするための可視化も提供しています。
+
+それぞれのパッケージと主な役割を以下にまとめます。
 
 | package                | role                                             |
 | ---------------------- | ------------------------------------------------ |

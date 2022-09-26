@@ -8,11 +8,4 @@ CARET では、特定のトピックやノードに関連するトレースポ�
 これにより、rviz ノードに関連するトレースデータや、tf トピックに関連するトレースデータだけを記録対象から外せるようになり、 規模の大きなシステムでも CARET による測定が可能になります。
 
 このフィルタリング機能は set で扱っているので、オーバーヘッドは非常に小さいです。
-
-```c++
-ros_tracing_callback_start(args){
-    is_callback_enabled() {
-        record(args);
-    }
-}
-```
+詳細については、[caret_trace](../software_architecture/caret_trace.md)をご覧ください。
