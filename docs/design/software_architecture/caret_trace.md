@@ -11,7 +11,7 @@ caret_trace の役割は以下の通りです。
 
 ここでは、実装についての説明のみを行います。
 
-- トレースポイントについては[Tracepoints](../trace_points/overview.md)をご覧ください。
+- トレースポイントについては[Tracepoints](../trace_points)をご覧ください。
 - フックについての説明は[Hook](../runtime_processing/hook.md)をご覧ください。
 
 詳細については、[CARET_trace](https://github.com/tier4/CARET_trace)をご覧ください。

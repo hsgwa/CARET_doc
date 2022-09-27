@@ -8,7 +8,8 @@ ROS のノードには任意の処理が記述されます。
 - subscribe して publish するまでにバッファが入っているケース
 - message filter を使用しているケース
 
-CARET では、デフォルトの挙動として use_latest_message を提供していますが、任意のノードレイテンシに対して対応するために、ノードへの実装変更を必要とします。
+CARET では、デフォルトの挙動として use_latest_message を提供していますが、[Limits and constraints](../limits_and_constraints/)で挙げている通り、正しく計測できないです。
+CARET ではこのような任意のノードレイテンシに対して対応するために、ノードへの実装変更を必要とします。
 実装変更としては、姉妹ツールの TILDE を使います。
 
 TILDE については[TILDE の公式サイト](https://github.com/tier4/TILDE)をご覧ください。

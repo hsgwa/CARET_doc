@@ -19,7 +19,7 @@
 
 リポジトリ：<https://github.com/tier4/rclcpp/tree/galactic_tracepoint_added>
 
-追加したトレースポイントについては、[トレースポイントの定義](./supported_tracepoints.md)の **[CARET フォーク実装]**となります。
+追加したトレースポイントについては、[トレースポイントの定義](../trace_points/)の **[CARET フォーク実装]**となります。
 
 > rclcpp 実装の理由
 >

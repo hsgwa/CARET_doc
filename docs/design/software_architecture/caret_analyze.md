@@ -320,14 +320,14 @@ ValueObjects では、同値性の持ったクラスを定義しています。
 
 CARET_analyze が提供する可視化では、bokeh や graphviz をベースとしています。
 
-Plot 関連の設計については[Visualizations](../visualizations/policy.md)をご覧ください。
+Plot 関連の設計については[Visualizations](../visualizations/policy)をご覧ください。
 
 ## records
 
 CARET ではレイテンシの算出はテーブルの独自の結合処理によって行います。
 records パッケージでは、独自の結合処理を持ったテーブルを定義しています。
 
-records 内で行われる処理の内容については[Records](../processing_trace_data/records.md)をご覧ください。
+records 内で行われる処理の内容については[Records](../processing_trace_data/records)をご覧ください。
 
 ## common
 

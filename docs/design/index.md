@@ -1,24 +1,28 @@
 Design describes the internals of CARET.
-Below is the measurement flow with each package added to the Tracing Flow.
+Following figure shows the tracing flow with each package added.
 
 ![architecture](../imgs/design.drawio.png)
 
-CARET collects data, which include timestamps, from tracepoints embedded in user application, ROS 2 and DDS. The data set is stored into a storage as "Trace Data".
+CARET records data, which include timestamps, from tracepoints embedded in user application, ROS 2 and DDS.
+The data are stored as "Trace Data".
 CARET analyzes the Trace Data and provides the results to the developer.
 
-The Design chapters describe policies and internal processes for each of the steps listed below.
+This design chapter describes policies and internal processes for each steps listed below.
 
-1. Runtimme processing of tracepoints.
-1. Adding tracepoints
-1. Data processing
-1. Latency calculation
-1. Visualization
+1. Recording
+1. [Runtime processing](./runtime_processing/)
+1. [Tracepoints](./trace_points/)
+1. Analyzing
+1. [Processing trace data](./processing_trace_data/)
+1. [Latency calculation](./latency_definitions/)
+1. [Visualization](./visualizations/)
 
 In addition, the followings are explained.
 
-- Software architecture
-- Latency definition
-- Limits and constraints
+- [Software architecture](./software_architecture/)
+- [Architecture file](./architecture_file/)
+- [Latency definition](./latency_definitions/)
+- [Limits and constraints](./latency_definitions/)
 
 See also
 

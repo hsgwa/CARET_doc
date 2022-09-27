@@ -2,23 +2,23 @@ nav:
     - Design: index.md
     - Software architecture:
         - Design:
-            - Overview: design/software_architecture/overview
+            - Overview: design/software_architecture
             - caret_analyze: design/software_architecture/caret_analyze
             - caret_trace: design/software_architecture/caret_trace
             - tilde: design/software_architecture/tilde
     - Runtime Processing:
         - Design:
-            - Overview: design/runtime_processing/overview
+            - Overview: design/runtime_processing
             - Hook: design/runtime_processing/hook
             - Tracepoint filtering: design/runtime_processing/tracepoint_filtering
     - Processing trace data:
         - Design:
-            - Overview: design/processing_trace_data/overview
+            - Overview: design/processing_trace_data
             - Records: design/processing_trace_data/records
             - Response time: design/processing_trace_data/response_time
     - Tracepoints:
         - Design:
-            - Overview: design/trace_points/overview
+            - Overview: design/trace_points
             - Initialization tracepoints: design/trace_points/initialization_trace_points
             - Runtime tracepoints: design/trace_points/runtime_trace_points
             - Message tracking: design/trace_points/message_tracking
@@ -28,11 +28,13 @@ nav:
             - File format: design/architecture_file
     - Latency definitions:
         - Design:
-            - Overview: design/latency_definitions/overview
+            - Overview: design/latency_definitions
             - Callback Latency: design/latency_definitions/callback_latency
             - Communication Latency: design/latency_definitions/communication_latency
             - Node Latency: design/latency_definitions/node_latency
             - Path Latency: design/latency_definitions/path_latency
     - Visualizations:
-        - Policy: design/visualizations/policy
+        - Design:
+            - Overview: design/visualizations
+            - Policy: design/visualizations/policy
     - Limits and constraints: limits_and_constraints
