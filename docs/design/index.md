@@ -4,10 +4,9 @@ Design では、CARET の内部について説明します。
 ![architecture](../imgs/design.drawio.png)
 
 CARET collects data, which include timestamps, from tracepoints embedded in user application, ROS 2 and DDS. The data set is stored into a storage as "Trace Data".
-
 CARET は Trace Data を解析し、デベロッパーに結果を提供します。
 
-Design の各章では、CARET が行う以下の工程の方針や内部処理について説明をします。
+Design の各章では、以下に示す各工程に対して、方針や内部処理について説明をします。
 
 1. トレースポイントの実行時処理
 1. トレースポイントの追加
