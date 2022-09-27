@@ -19,6 +19,7 @@ nav:
         - Message tracking: design/trace_points/message_tracking
         - Differences from original ROS: design/trace_points/diff
     - Latency definitions:
+        - Overview: design/latency_definitions/overview
         - Callback Latency: design/latency_definitions/callback_latency
         - Communication Latency: design/latency_definitions/communication_latency
         - Node Latency: design/latency_definitions/node_latency
