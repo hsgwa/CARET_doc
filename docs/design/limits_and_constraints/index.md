@@ -1,4 +1,4 @@
-# 制約
+# Limits and constraints
 
 - 任意のノードペアの間はプロセス内通信・プロセス間通信は固定。トピック毎に指定していないこと。
 - /rosout や/parameter_event はパスには含まない。
@@ -6,8 +6,10 @@
 - ROS レイヤーをラップしている。
 - 同じスレッドでなければならないペアが存在する。同じスレッドでの実行を前提にしている　トレースポイントのペアがある。
 - reentrant で実行していない
-
 - アプリケーションの再ビルドが必要（rclcpp のヘッダーにトレースポイントを追加したため）
-- galatic と Humble に 対応
-- FastDDS/CycloneDDS のみ対応（DDS-layer 測定のために DDS 内のフックも行っているため）
 - Linux のみの対応（LTTng を使用していることによるもの）
+- サービス
+- アクション
+- ホスト単体
+- FastDDS/CycloneDDS のみ対応（DDS-layer 測定のために DDS 内のフックも行っているため）
+- galatic と Humble に 対応
