@@ -1,3 +1,1 @@
-# Latency definitions
-
-![Latency overview](../../imgs/latency_overview.png)
+# TODO: 削除。リンク切れによる mkdocs エラーを防ぐために残しています

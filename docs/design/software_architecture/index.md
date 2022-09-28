@@ -8,10 +8,10 @@ CARET is divided into two phase; recording phase and analyzing phase.
 
 ## Recording Phase
 
-Recording phase records system execution data from trace points.
+In Recording phase, CARET records system execution data from trace points.
 
 In addition to the tracepoints built into ROS2, CARET adds tracepoints by several methods; CARET_trace CARET_rclcpp and TILDE.
-For flexibility in adding tracepoints, tracepoints are added by hooks if possible.
+For flexibility in adding tracepoints, tracepoints are added by hooks as possible.
 Only if it is not possible to add tracepoints by hooks, tracepoints are added by other methods as a supplementary method.
 
 All recorded data is stored as TraceData and used in the analyzing phase.
@@ -24,31 +24,37 @@ See also
 - [Runtime Processing](../runtime_processing)
 - [The LTTng Documentation](https://lttng.org/docs/)
 
+## Configuration Phase
+
+In configuration phase, CARET needs configurations to calculate latency.
+
+Some of the configurations can be defined via the Python API.
+Configuration can be saved as a yaml file (Architecture file) and edited in yaml.
+The architecture file is used repeatedly in the analyzing phase.
+
+See also
+
+- [Configuration](../configuration/)
+
 ## Analyzing Phase
 
-In analyzing ahase, CARET analyzes trace data to calculate and visualize latency.
+In analyzing phase, CARET analyzes trace data to provide system execution information.
 
-A trace data is divided into two sections by CARET_analyze after loading trace data; Architecture and Runtime Data.
+CARET_analyze provides a Python class that can access a variety of time series information.
+Developers can get the necessary information for evaluation from this class and perform evaluation according to their objectives.
 
-Architecture データはパスの定義などを記述しています。
-評価対象のパスの定義などは、デベロッパーが指定する必要があります。
-一度設定した Architecture 情報は yaml ファイルとして保存し、次回から使用が可能です。
-
-Runtime Data は測定値など測定毎に変化する情報です。
-実行時の情報は事前に定義した Architecture 情報と結び付けられ、評価しやすい形の python-API としてデベロッパーに提供されます。
-
-CARET_analyze は PythonAPI を提供することが重要な役割としてありますが、
-jupyter 上での評価を簡単にするための可視化も提供しています。
+CARET_analyze also provides visualizations for evaluation on jupyter.
 
 See also
 
 - [Processing trace data | Overview](../processing_trace_data)
 - [Latency definitions | Overview](../latency_definitions)
 - [Visualizations | Policy](../visualizations)
+- [Bokeh](https://docs.bokeh.org/)
 
 ## ROS 2 Packages
 
-CARET に関連するパッケージと主な役割を以下にまとめます。
+Followings are CARET-related packages.
 
 | Package                             | Role                                             | Repository                                                                                           |
 | ----------------------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |

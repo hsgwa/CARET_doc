@@ -89,7 +89,7 @@ void ros_trace_callback_start(const void * callback, bool is_intra_process) {
 callback のアドレスからノード名などの情報へは、他のトレースポイントの情報から紐付けを行うことで取得できます。
 詳細は[Initialization trace points](../trace_points/initialization_trace_points.md)をご覧ください。
 
-## simtime recorder
+## clock recorder
 
 CARET は可視化の際に simtime を選択できます。
 simtime は simtime 記録用のトレースポイントを追加した、simtime_recorder node を起動することで記録できます。
@@ -99,3 +99,4 @@ ros2 run caret_trace clock_recorder
 ```
 
 ClockRecorder node は、１秒毎に起床し、simtime と system time を記録します。
+ここで記録した system time と simtime は、y=ax+b の a と b を決定するのに使われます。

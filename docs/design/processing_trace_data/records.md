@@ -38,7 +38,7 @@ See also
 - [API:merge_sequential_for_addr_track](https://tier4.github.io/CARET_analyze/latest/record/#caret_analyze.record.interface.RecordsInterface.merge_sequential_for_addr_track)
 
 <prettier-ignore-start>
-!!!info
+!!!warning
     このmergeは、処理が遅く、caret-rclcppが使われていないノードがpublishした際に不整合が起こってしまいます。
     できる限り、merge_sequentialで事足りるようにトレースポイントを設計すべきです。
 <prettier-ignore-end>

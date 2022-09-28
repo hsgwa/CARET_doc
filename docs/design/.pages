@@ -23,16 +23,20 @@ nav:
             - Runtime tracepoints: design/trace_points/runtime_trace_points
             - Message tracking: design/trace_points/message_tracking
             - Differences from original ROS: design/trace_points/diff
-    - Architecture file:
+    - Configuration:
         - Design:
-            - File format: design/architecture_file
+            - Overview: design/configuration
+            - File format: design/configuration/architecture_file
     - Latency definitions:
         - Design:
             - Overview: design/latency_definitions
-            - Callback Latency: design/latency_definitions/callback_latency
-            - Communication Latency: design/latency_definitions/communication_latency
-            - Node Latency: design/latency_definitions/node_latency
-            - Path Latency: design/latency_definitions/path_latency
+            - Callback: design/latency_definitions/callback
+            - Communication: design/latency_definitions/communication
+            - Node: design/latency_definitions/node
+            - Path: design/latency_definitions/path
+            - Timer: design/latency_definitions/timer
+            - Publisher: design/latency_definitions/publisher
+            - Subscription: design/latency_definitions/subscription
     - Visualizations:
         - Design:
             - Overview: design/visualizations
