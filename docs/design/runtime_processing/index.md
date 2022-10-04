@@ -1,4 +1,12 @@
-CARET は実行時に以下を行います。
+# Runtime processing
 
-- トレースポイントの追加
-- トレースフィルタリングの実現
+CARET process followings at runtime.
+
+- [Adds trace points via hooks](./hook.md)
+- [Implement trace filtering](./tracepoint_filtering.md)
+
+LTTng is also multifunctional, but CARET specializes ROS-aware functionality.
+
+See also
+
+- [Tracepoint](../trace_points/)

@@ -1,22 +1,20 @@
 # caret_trace
 
-caret_trace はトレースポイントの追加や管理を行うパッケージです。
+caret_trace is a package that handles recording such as adding trace points.
 
-caret_trace の役割は以下の通りです。
+The role of caret_trace is as follows
 
-- レースポイント定義
-- フックでのとレースポイント追加
+- Race Point Definition
+- Adding Racepoints with Hooks
 - trace filtering
-- simtime の記録
+- simtime recording
 
-ここでは、実装についての説明のみを行います。
+See also
 
-- トレースポイントについては[Tracepoints](../trace_points)をご覧ください。
-- フックについての説明は[Hook](../runtime_processing/hook.md)をご覧ください。
+- [Tracepoints](../trace_points)
+- [Hook](../runtime_processing/hook.md)
 
-詳細については、[CARET_trace](https://github.com/tier4/CARET_trace)をご覧ください。
-
-## クラス構成
+## Class Structure
 
 ```plantuml
 
@@ -46,12 +44,11 @@ class ClockRecoerder {
 KeysSet o-- HashableKeys
 ```
 
-## フック箇所の実装
+## Hook function implementation
 
-CARET では、フックでのとレースポイント追加のためのフックに加え、
-ROS2 に組み込まれたトレースポイントもフックしています。
+In addition to hooking and for adding race points, CARET also hooks trace points built into ROS2.
 
-典型的なフック箇所の実装例を示します。
+Here is an example of a typical hook implementation.
 
 ```C++
 void ros_trace_rcl_node_init(
@@ -60,43 +57,40 @@ void ros_trace_rcl_node_init(
   const char * node_name,
   const char * node_namespace)
 {
-  // TracingControllerのインスタンスを取得。
-  // TracingControllerのコンストラクタで、環境変数からフィルタ対象のノード名とトピック名を取得。
   static auto & controller = Singleton<TracingController>::get_instance();
 
-  // node_handleとノード名の紐付け
+  // Bind node handle and node name
   controller.add_node(node_handle, ns + node_name);
 
-  // 許可されているノードのみトレースポイントを出力
+  // Record trace data only if current node is allowed to record
   if (controller.is_allowed_node(node_handle)) {
     ORIG_FUNC::ros_trace_rcl_node_init)(node_handle, rmw_handle, node_name, node_namespace);
   }
 }
 
 void ros_trace_callback_start(const void * callback, bool is_intra_process) {
-  // TracingControllerのインスタンスを取得。
   static auto & controller = Singleton<TracingController>::get_instance();
 
-  // 許可されているコールバックのみトレースポイントを出力
+  // Record trace data only if current callback is allowed to record
   if (controller.is_allowed_callback(callback)) {
     ORIG_FUNC::ros_trace_callback_start(callback, is_intra_process);
   }
 }
 ```
 
-デバッグログなどについては省略しています。
+Debugging logs and other information are omitted.
 
-callback のアドレスからノード名などの情報へは、他のトレースポイントの情報から紐付けを行うことで取得できます。
-詳細は[Initialization trace points](../trace_points/initialization_trace_points.md)をご覧ください。
+Information from callback addresses to node names, etc., can be obtained by binding them to other trace point information.
+See [Initialization trace points](../trace_points/initialization_trace_points.md) for details.
 
 ## clock recorder
 
-CARET は可視化の際に simtime を選択できます。
-simtime は simtime 記録用のトレースポイントを追加した、simtime_recorder node を起動することで記録できます。
+CARET can select simtime for visualization.
+The simtime can be recorded by invoking the simtime_recorder node, which adds trace points for simtime recording.
 
 ```bash
 ros2 run caret_trace clock_recorder
 ```
 
-ClockRecorder node は、１秒毎に起床し、simtime と system time を記録します。
-ここで記録した system time と simtime は、y=ax+b の a と b を決定するのに使われます。
+ClockRecorder node wakes up every second and records simtime and system time.
+The recorded results are used to calculate simtime from system time.

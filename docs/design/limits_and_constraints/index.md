@@ -1,15 +1,27 @@
 # Limits and constraints
 
-- 任意のノードペアの間はプロセス内通信・プロセス間通信は固定。トピック毎に指定していないこと。
-- /rosout や/parameter_event はパスには含まない。
-- 同じ名前空間を持つ、同じノード名は一つのみ。
-- ROS レイヤーをラップしている。
-- 同じスレッドでなければならないペアが存在する。同じスレッドでの実行を前提にしている　トレースポイントのペアがある。
-- reentrant で実行していない
-- アプリケーションの再ビルドが必要（rclcpp のヘッダーにトレースポイントを追加したため）
-- Linux のみの対応（LTTng を使用していることによるもの）
-- サービス
-- アクション
-- ホスト単体
-- FastDDS/CycloneDDS のみ対応（DDS-layer 測定のために DDS 内のフックも行っているため）
-- galatic と Humble に 対応
+## Environment
+
+CARET only supports environments as follows.
+
+- Only host measurements.
+- FastDDS or CycloneDDS only.
+- Support for Linux only.
+- Support for Galatic and Humble.
+- Required rebuilding the application.
+
+## ROS 2 functions
+
+CARET cannot support functions as follows.
+
+- /rosout and /parameter_event topic
+- Services
+- Actions
+
+## Implementation
+
+CARET cannot support implementations as follows.
+
+- There exist several nodes which have the same namespace and node name.
+- wrapper for ROS layers.
+- Reentrant callback group.

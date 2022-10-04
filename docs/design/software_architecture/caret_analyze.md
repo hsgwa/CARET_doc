@@ -1,6 +1,6 @@
 # CARET_analyze
 
-caret_analyze is a package that loads trace data and architecture files and provides developers with a Python API for configuration and evaluation
+caret_analyze is a package that loads trace data and architecture files and provides Python APIs for configuration and evaluation.
 
 See [CARET analyze API document](https://tier4.github.io/CARET_analyze/) for the API of each class.
 
@@ -15,7 +15,8 @@ The architecture object includes descriptions of the target application's struct
 Runtime Data object has data sampled during the execution of the target application. The sampled data includes timestamps, whose values are different per execution, obtained from tracepoints.
 Runtime data is combined with architecture and provided to developers via Python-API which is easy to evaluate.
 
-Architecture object and Runtime Data object are implemented as Python classes. The structure of their classes is designed based on the structure of ROS applications which are constructed of executors, nodes, callback functions, and topic messages. ROS-based structure makes CARET's API friendly for ROS users. They can find target nodes, topic messages, or executors if they know their application structure.
+Architecture object and Runtime Data object are implemented as Python classes.
+The structure of their classes is designed based on the structure of ROS applications which are constructed of executors, nodes, callback functions, and topic messages. ROS-based structure makes CARET's API friendly for ROS users.
 
 CARET_analyze is composed of several python packages.
 Each python packages are as follows.
@@ -76,24 +77,26 @@ architecture o-- NodeStructValue
 Irecords <.. infra : use
 ```
 
-Architecture object serves APIs to search node chains and define node latency as mentioned in [tutorial/architecture file section](../tutorials/configuration.md). The architecture object is reusable after it is saved as a YAML-based file called "architecture file".
+Architecture object provides APIs to search node chains and define node latency as mentioned in [tutorial/architecture file section](../tutorials/configuration.md). The architecture object is reusable after it is saved as a YAML-based file called "architecture file".
 
-Runtime Data object serves APIs to retrieve `pandas.DataFrame`-based objects including callback latency or communication. Users can analyze temporal aspects of their applications, with visualization, as they expect. APIs for visualization are also served by CARET_analyze which plays the main role to analyze trace data.
+Runtime Data object provides APIs to retrieve `pandas.DataFrame`-based objects including callback latency or communication. Users can analyze temporal aspects of their applications, with visualization, as they expect. APIs for visualization are also served by CARET_analyze which plays the main role to analyze trace data.
+
+In the following sections, each package will be explained in more detail.
 
 ## architecture
 
-architecture では、以下のような構成を持ったインスタンスを生成します。
-これにより、各クラスから辿っていくことで、必要な情報を取得できるようにしています。
+In architecture, an instance is created with the following structure.
+This allows access to the necessary information from the top-level Architecture class.
 
-Architecture の目的
+Purpose of Architecture:
 
-- 静的な情報のみを取り扱う。
-- Analyze で使う情報を定義する
+- Define static information to be used in Analyze
 
 <prettier-ignore-start>
-!!! todo
-        本当はレイテンシの値以外の情報は全て入れたい気持ちです。
-        設計に役に立たせたい気持ちだけあります。
+!!! Info
+      Perhaps "Model" may be more appropriate than the name "Architecture".
+      Architecture describes all the parameters related to scheduling, such as scheduling and core migration.
+      Therefore, we're thinking that the architecture is capable of design based on scheduling theory.
 <prettier-ignore-end>
 
 ```plantuml
@@ -133,9 +136,12 @@ CallbackStructValue o-d- SubscriptionStructValue
 ExecutorStructValue o-- CallbackGroupStructValue
 ```
 
+All information retrieved from the Architecture file is of type ValueObject,
+which is suitable for interfacing information between other packages.
+
 ## runtime
 
-トレース結果も含む runtime は、architecture の関係に加え、　測定結果の算出関数が追加されています。
+The runtime, which also includes trace results, follows the architecture structure and adds a function to calculate the measurement results.
 
 ```plantuml
 
@@ -174,7 +180,10 @@ CallbackBase o-d- Subscription
 Executor o-- CallbackGroup
 ```
 
-| Class         | API                                                                                                   | has to_dataframe? (Definitions)                              |
+There are classes that can calculate latency and classes as collections.
+The following is a list of each class and the classes which can calculate latency.
+
+| Class         | API                                                                                                   | has latency definition?                                      |
 | ------------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
 | Application   | [API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.Application)   | No                                                           |
 | Executor      | [API list](https://tier4.github.io/CARET_analyze/latest/runtime/#caret_analyze.runtime.Executor)      | No                                                           |
@@ -189,31 +198,33 @@ Executor o-- CallbackGroup
 
 ## value_objects
 
-ValueObjects では、同値性の持ったクラスを定義しています。
-紐付けのための情報を持つ Value クラスと、紐付け後を行い複数のクラスで構造を有する StructValue が定義されています。
+ValueObjects defines classes with equivalence.
+The Value class has the information for binding, and the StructValue class has the structure of multiple classes after binding.
 
 ## plot
 
-表示に関連したクラスがあります。
+There are classes associated with the display.
+The visualization provided by CARET_analyze is based on bokeh and graphviz.
 
-CARET_analyze が提供する可視化では、bokeh や graphviz をベースとしています。
+See also
 
-Plot 関連の設計については[Visualizations](../visualizations/policy)をご覧ください。
+- [Visualizations](../visualizations/)
 
 ## records
 
-CARET ではレイテンシの算出はテーブルの独自の結合処理によって行います。
-records パッケージでは、独自の結合処理を持ったテーブルを定義しています。
+In CARET, latency is calculated by join process of tables uniquely defined.
+The records package defines tables with their own join processing.
 
-records 内で行われる処理の内容については[Records](../processing_trace_data/records)をご覧ください。
+See also
+
+- [Records](../processing_trace_data/records.md)
 
 ## common
 
-各パッケージで共通として扱える、個別の処理が記述されています。
+Individual processes are described that can be handled as common in each package.
 
 ## infra
 
-外部から読み取る処理を記述しています。
+It describes the process of reading from the outside.
 
-yaml, Lttng が入っており、
-それぞれ reader/provider に与えるようになっています。
+It contains YAML and Lttng, which are given to ArchitectureReader/RuntimeDataProvider respectively.

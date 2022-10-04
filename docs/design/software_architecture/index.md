@@ -4,11 +4,11 @@ This section explains an overview of software architecture.
 
 ![architecture](../../imgs/architecture.drawio.png)
 
-CARET is divided into two phase; recording phase and analyzing phase.
+CARET is divided into three phases; recording phase, configuration phase and analyzing phase.
 
 ## Recording Phase
 
-In Recording phase, CARET records system execution data from trace points.
+In the recording phase, CARET records system execution data from tracepoints.
 
 In addition to the tracepoints built into ROS2, CARET adds tracepoints by several methods; CARET_trace CARET_rclcpp and TILDE.
 For flexibility in adding tracepoints, tracepoints are added by hooks as possible.
@@ -18,6 +18,11 @@ All recorded data is stored as TraceData and used in the analyzing phase.
 
 CARET utilizes LTTng as a trace mechanism.
 
+In CARET, packages related to recording phase are followings.
+
+- [caret_trace](./caret_trace.md)
+- [TILDE](./tilde.md)
+
 See also
 
 - [Tracepoints](../trace_points)
@@ -26,11 +31,15 @@ See also
 
 ## Configuration Phase
 
-In configuration phase, CARET needs configurations to calculate latency.
+In the configuration phase, CARET needs configurations to calculate latency.
 
 Some of the configurations can be defined via the Python API.
-Configuration can be saved as a yaml file (Architecture file) and edited in yaml.
+Configuration can be saved as a YAML file (Architecture file) and edited.
 The architecture file is used repeatedly in the analyzing phase.
+
+In CARET, packages related to configuration phase are followings.
+
+- [caret_analyze](./caret_analyze.md)
 
 See also
 
@@ -43,18 +52,22 @@ In analyzing phase, CARET analyzes trace data to provide system execution inform
 CARET_analyze provides a Python class that can access a variety of time series information.
 Developers can get the necessary information for evaluation from this class and perform evaluation according to their objectives.
 
-CARET_analyze also provides visualizations for evaluation on jupyter.
+CARET_analyze also provides visualizations for the evaluation of Jupyter.
+
+In CARET, packages related to configuration phase are followings.
+
+- [caret_analyze](./caret_analyze.md)
 
 See also
 
-- [Processing trace data | Overview](../processing_trace_data)
-- [Latency definitions | Overview](../latency_definitions)
-- [Visualizations | Policy](../visualizations)
+- [Processing trace data](../processing_trace_data)
+- [Latency definitions](../latency_definitions)
+- [Visualizations](../visualizations)
 - [Bokeh](https://docs.bokeh.org/)
 
 ## ROS 2 Packages
 
-Followings are CARET-related packages.
+The followings are CARET-related packages.
 
 | Package                             | Role                                             | Repository                                                                                           |
 | ----------------------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |

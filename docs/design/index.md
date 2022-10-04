@@ -27,7 +27,6 @@ Analyzing phase
 In addition, the followings are explained.
 
 - [Software architecture](./software_architecture/)
-- [Architecture file](./architecture_file/)
 - [Latency definition](./latency_definitions/)
 - [Limits and constraints](./latency_definitions/)
 
