@@ -7,7 +7,7 @@ CARET records data, which include timestamps, from tracepoints embedded in user 
 The data are stored as "Trace Data".
 CARET analyzes the Trace Data and provides the results to the developer.
 
-This design chapter describes policies and internal processes for each step listed below.
+This design section describes policies and internal processes for each step listed below.
 
 Recording phase
 

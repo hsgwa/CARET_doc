@@ -1,13 +1,23 @@
-CARET ではレイテンシ算出に関わるトレースデータの加工をテーブルで行っています。
+# Record Object
 
-pandas.DataFrame-like な API を備えており、処理速度を早くした C++実装版もあります。
+In CARET, trace data is stored in tables, and latency calculation is performed by processing the tables.
+In addition to general table join processing, CARET defines classes which has originally defined join processing for latency calculation.
 
-ここではいくつかの主な API について説明します。
+This sections describes Record object which stores trace data and latency is.
+
+The rest of this section describes the main APIs provided by the record object.
+
+- merge
+- merge_sequential
+- merge_sequential_for_addr_track
+- to_dataframe
 
 ## merge
 
 ![merge](../../imgs/records_merge.drawio.png)
-一般的なテーブルの内部結合、外部結合です。
+
+This is an inner join and outer join of general tables.
+In particular, it is used to join initialization-related trace data that can be bound by address only.
 
 See also
 
@@ -17,10 +27,10 @@ See also
 
 ![merge_sequential](../../imgs/records_merge_sequential.drawio.png)
 
-時系列的なマージです。
-特に thread による逐次的な処理を結合する際に使います。
+This is a chronological merge.
+It is especially used to merge sequential processing by threads.
 
-CARET はこのような結合を行い、レイテンシを算出しています。
+CARET mainly performs this merging and calculates latency.
 
 See also
 
@@ -31,7 +41,7 @@ See also
 
 ![merge_sequential_for_addr_track](../../imgs/records_merge_sequential_for_addr_track.drawio.png)
 
-アドレスを元に紐付けを行い、コピーが発生する際に使うマージです。
+This merge is used when binding is done based on addresses and copying occurs in the middle of the process.
 
 See also
 
@@ -39,14 +49,11 @@ See also
 
 <prettier-ignore-start>
 !!!warning
-    このmergeは、処理が遅く、caret-rclcppが使われていないノードがpublishした際に不整合が起こってしまいます。
-    できる限り、merge_sequentialで事足りるようにトレースポイントを設計すべきです。
+    This merge is slow and causes inconsistencies when nodes not using caret-rclcpp are published.
+    As much as possible, trace points should be designed so that merge_sequential is sufficient.
 <prettier-ignore-end>
 
 ## to_dataframe
 
-pandas.DataFrame に変換する関数です。
-特に可視化や自前で評価する際には、こちらが使えます。
-
-ただし、pandas.DataFrame は object を含む様々な型を入れられるようになっており、バグの要因になります。
-CARET 内部ではできる限り Records で処理し、最後に DataFrame に変換するのが望ましいです。
+Function to convert to a pandas.DataFrame.
+This is especially useful for unique visualization and evaluation by developers.

@@ -1,8 +1,13 @@
 # Architecture file
 
-See also
+An architecture file is a yaml file with the necessary information for visualization.
 
-- [Configuration](../configuration/)
+An architecture file contains the following information
+
+- Definition of the node-path to be measured
+- Information about the structure of the software to be measured
+  - Executor information
+  - Node information (e.g. node latency definition)
 
 ## File format
 
@@ -44,7 +49,7 @@ A sample of the architecture file is as follows.
 | &emsp; &emsp; subscription_topic_name | String       | No                                         | Yes                                        |                                                    |
 | &emsp; &emsp; publisher_topic_name    | String       | No                                         | Yes                                        |                                                    |
 
-## File sample
+## Sample
 
 A sample of the architecture file is as follows.
 

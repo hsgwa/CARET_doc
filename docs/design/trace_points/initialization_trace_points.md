@@ -1,6 +1,9 @@
-Some tracepoints share a same identification, such as a node ID (`node_handle`) and an address of callback instance. The shared identification associates each tracepoint to another, the association constructs structure of tracepoint relationship. The following figures show four structures.
+Some tracepoints share a same identification, such as a node ID (`node_handle`) and an address of callback instance.
+The shared identification associates each tracepoint to another, the association constructs structure of tracepoint relationship.
 
-### Tracepoints for representing structure of a node
+### Relationships for each initialization trace points
+
+Relationships of each trace point related to a single node are shown as follows.
 
 ```mermaid
 erDiagram
@@ -65,14 +68,9 @@ erDiagram
  string rmw_impl
  }
 
-    rcl_node_init ||--|| rcl_publisher_init : node_handle
-    rcl_node_init ||--|| rcl_subscription_init : node_handle
-    rcl_node_init ||--|| rclcpp_timer_link_node : node_handle
-
-    rcl_node_init ||--|| rcl_publisher_init : node_handle
-    rcl_node_init ||--|| rcl_subscription_init : node_handle
-    rcl_node_init ||--|| rclcpp_timer_link_node : node_handle
-
+    rcl_node_init ||--o{ rcl_publisher_init : node_handle
+    rcl_node_init ||--o{ rcl_subscription_init : node_handle
+    rcl_node_init ||--o{ rclcpp_timer_link_node : node_handle
 
     rcl_publisher_init ||--|| PUBLISHER_HANDLE : node_handle
     rcl_subscription_init ||--|| SUBSCRIPTION_HANDLE : node_handle
@@ -87,15 +85,9 @@ erDiagram
     rclcpp_timer_callback_added ||--|| rcl_timer_init : timer_handle
     rclcpp_timer_link_node ||--|| rcl_timer_init: timer_handle
 
-
-
-
-
-
-
-
-
 ```
+
+Relationships of each trace point related to executors are shown as follows.
 
 ```mermaid
 erDiagram
@@ -143,17 +135,17 @@ erDiagram
  }
 
 
- construct_executor ||--|| add_callback_group : executor_addr
- construct_static_executor ||--|| add_callback_group_static_executor : entities_collector_addr
+ construct_executor ||--o{ add_callback_group : executor_addr
+ construct_static_executor ||--o{ add_callback_group_static_executor : entities_collector_addr
 
-    add_callback_group_static_executor ||--|| callback_group_add_timer : callback_group_addr
-    add_callback_group_static_executor ||--|| callback_group_add_subscription : callback_group_addr
-    add_callback_group_static_executor ||--|| callback_group_add_service : callback_group_addr
-    add_callback_group_static_executor ||--|| callback_group_add_client : callback_group_addr
-    add_callback_group ||--|| callback_group_add_timer : callback_group_addr
-    add_callback_group ||--|| callback_group_add_subscription : callback_group_addr
-    add_callback_group ||--|| callback_group_add_service : callback_group_addr
-    add_callback_group ||--|| callback_group_add_client : callback_group_addr
+    add_callback_group_static_executor ||--o{ callback_group_add_timer : callback_group_addr
+    add_callback_group_static_executor ||--o{ callback_group_add_subscription : callback_group_addr
+    add_callback_group_static_executor ||--o{ callback_group_add_service : callback_group_addr
+    add_callback_group_static_executor ||--o{ callback_group_add_client : callback_group_addr
+    add_callback_group ||--o{ callback_group_add_timer : callback_group_addr
+    add_callback_group ||--o{ callback_group_add_subscription : callback_group_addr
+    add_callback_group ||--o{ callback_group_add_service : callback_group_addr
+    add_callback_group ||--o{ callback_group_add_client : callback_group_addr
 
      callback_group_add_timer ||--|| TIMER_HANDLE : callback_group_addr
     callback_group_add_subscription ||--|| SUBSCRIPTION_HANDLE : callback_group_addr

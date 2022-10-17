@@ -1,4 +1,4 @@
-### Tracepoints for representing flow of message transmission
+### Relationships for each runtime trace points
 
 ```mermaid
 erDiagram
@@ -15,6 +15,11 @@ erDiagram
  message_construct{
  address original_message
  address constructed_message
+ }
+
+ dds_bind_addr_to_addr{
+ address addr_from
+ address addr_to
  }
 
  rclcpp_intra_publish{
@@ -70,23 +75,11 @@ erDiagram
 
 ```
 
-If a topic message is defined with unique_ptr and transmitted to multiple subscription by `publish` method, the topic message may be copied.  
-CARET can associate an address of original message to that of copied one by `message_construct`.  
-A certain message is identified with an unique address in rcl layer, it is identified with `source_timestamp` in DDS layer.  
-All messages communicated via DDS have `source_timestamp` given automatically, which are introduced for QoS function.A pair of publish and subscription same `source_timestamp`.  
-CARET utilizes `source_timestamp` to map transmitted message to received one.
+Using addresses, tid and source timestamp, it is possible to uniquely identify and bind from the rclcpp publish to the end of subscription node callback.
+On the other hand, callback start and publish cannot be automatically binded.
+This is because the relationship between callback and publish is highly implementation-dependent.
 
-CARET maps a `message_addr` to a published message for intra-process communication, and a `source_timestamp` to one for inter-communication.
-
-### Tracepoints for representing flow of callback execution after message reception
-
-As well as flow of message transmission, a message is identified by `message_addr` for intra-process communication, but `source_timestamp` for inter-process communication.
-
-`message_addr` and `source_timestamp` is mapped a corresponding `callback_start`.  
-As explained, `message_addr` and `source_timestamp` are identifier for transmission flow using `publish` method.
-This means that a invoked `publish` method is mapped to a `callback_start`.
-
-However this does not mean that CARET can map a `callback_start` to a corresponding `publish`. CARET can trace a certain flow from `publish` to `callback_start`, but the reversed mapping, from `callback_start` to `publish`, is not supported by CARET. The capability of mapping between callback_start and publish will be improved in v0.3.\* release or later.
+message_construct and dds_bind_addr_to_addr are trace points to adapt to copying and converting instances for binding.
 
 ### ros2:callback_start
 

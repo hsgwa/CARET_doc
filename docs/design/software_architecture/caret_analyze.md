@@ -77,7 +77,7 @@ architecture o-- NodeStructValue
 Irecords <.. infra : use
 ```
 
-Architecture object provides APIs to search node chains and define node latency as mentioned in [tutorial/architecture file section](../tutorials/configuration.md). The architecture object is reusable after it is saved as a YAML-based file called "architecture file".
+Architecture object provides APIs to search node paths and define node latency as mentioned in [tutorial/architecture file section](../tutorials/configuration.md). The architecture object is reusable after it is saved as a YAML-based file called "architecture file".
 
 Runtime Data object provides APIs to retrieve `pandas.DataFrame`-based objects including callback latency or communication. Users can analyze temporal aspects of their applications, with visualization, as they expect. APIs for visualization are also served by CARET_analyze which plays the main role to analyze trace data.
 
@@ -94,9 +94,9 @@ Purpose of Architecture:
 
 <prettier-ignore-start>
 !!! Info
-      Perhaps "Model" may be more appropriate than the name "Architecture".
+      "Model" might be more appropriate than the name "Architecture".
       Architecture describes all the parameters related to scheduling, such as scheduling and core migration.
-      Therefore, we're thinking that the architecture is capable of design based on scheduling theory.
+      Therefore, we're thinking that the architecture can be used for design based on scheduling theory.
 <prettier-ignore-end>
 
 ```plantuml
@@ -198,7 +198,7 @@ The following is a list of each class and the classes which can calculate latenc
 
 ## value_objects
 
-ValueObjects defines classes with equivalence.
+ValueObjects define classes with equivalence.
 The Value class has the information for binding, and the StructValue class has the structure of multiple classes after binding.
 
 ## plot
@@ -212,7 +212,7 @@ See also
 
 ## records
 
-In CARET, latency is calculated by join process of tables uniquely defined.
+In CARET, latency is calculated by joining process of tables uniquely defined.
 The records package defines tables with their own join processing.
 
 See also
@@ -221,10 +221,10 @@ See also
 
 ## common
 
-Individual processes are described that can be handled as common in each package.
+Common package implements individual processes are described that can be handled as common in each package.
 
 ## infra
 
-It describes the process of reading from the outside.
+Infra package implements the process of reading from the outside.
 
-It contains YAML and Lttng, which are given to ArchitectureReader/RuntimeDataProvider respectively.
+It contains YAML and Lttng which implement ArchitectureReader/RuntimeDataProvider respectively.

@@ -4,11 +4,11 @@
 
 CARET only supports environments as follows.
 
-- Only host measurements.
-- FastDDS or CycloneDDS only.
-- Support for Linux only.
+- Support single host.
+- FastDDS or CycloneDDS.
+- Support for Linux.
 - Support for Galatic and Humble.
-- Required rebuilding the application.
+- Require rebuilding of an application.
 
 ## ROS 2 functions
 

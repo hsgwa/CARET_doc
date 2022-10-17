@@ -16,6 +16,11 @@ $$
 l^{comm} = t_{sub} - t_{pub}
 $$
 
+<prettier-ignore-start>
+!!! todo
+        スケジューリングの影響を受けるようになっています。通信レイテンシだけではありません。
+<prettier-ignore-end>
+
 ## プロセス内通信
 
 TODO: 処理のシーケンスを正しく直す。

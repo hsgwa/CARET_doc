@@ -1,17 +1,8 @@
 # Configuration
 
-一部は python API からいじります。
-その他は直接 yaml をいじります。
+CARET requires several kinds of information for visualization.
+Configuration set up the information needed for visualization.
 
-結構大変なので、今後の改善が必要です。
+Some of the information can be configured via Python API and jupyter, but there are also items that require direct modification of the architecture file.
 
-## lttng
-
-パスの定義は無いです。
-callback や communication レイテンシ等であればこれで OK です。
-
-## yaml
-
-パスの定義等が必要な時にこれを使うことになります。
-
-アーキテクチャファイルのフォーマットについては[architecture file](./architecture_file.md)をご覧ください。
+For the format of the architecture file, see [architecture file](./architecture_file) for the format of the architecture file.

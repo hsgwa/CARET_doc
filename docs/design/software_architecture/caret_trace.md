@@ -5,7 +5,7 @@ caret_trace is a package that handles recording such as adding trace points.
 The role of caret_trace is as follows
 
 - Race Point Definition
-- Adding Racepoints with Hooks
+- Adding Tracepoints with Hooks
 - trace filtering
 - simtime recording
 
@@ -46,7 +46,7 @@ KeysSet o-- HashableKeys
 
 ## Hook function implementation
 
-In addition to hooking and for adding race points, CARET also hooks trace points built into ROS2.
+In addition to hooking and for adding trace points, CARET also hooks trace points built into ROS2.
 
 Here is an example of a typical hook implementation.
 
@@ -78,7 +78,7 @@ void ros_trace_callback_start(const void * callback, bool is_intra_process) {
 }
 ```
 
-Debugging logs and other information are omitted.
+Here, debugging logs and other information are omitted.
 
 Information from callback addresses to node names, etc., can be obtained by binding them to other trace point information.
 See [Initialization trace points](../trace_points/initialization_trace_points.md) for details.
@@ -86,7 +86,7 @@ See [Initialization trace points](../trace_points/initialization_trace_points.md
 ## clock recorder
 
 CARET can select simtime for visualization.
-The simtime can be recorded by invoking the simtime_recorder node, which adds trace points for simtime recording.
+The simtime can be recorded by running the simtime_recorder node, which adds trace points for simtime recording.
 
 ```bash
 ros2 run caret_trace clock_recorder

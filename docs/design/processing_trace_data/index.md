@@ -1,4 +1,15 @@
 # Processing trace data
 
-CARET は Trace Data は加工しています。
-加工の詳細について説明します。
+CARET processes Trace Data to provide latency to the user.
+This section describes the Trace Data processing process.
+
+The class that reads TraceData is the Records object.
+
+The following are processing using Records object.
+
+- [response time](./response_time)
+
+See also
+
+- [Latency definition](../latency_definitions/)
+- [caret_analyze](../software_architecture/caret_analyze.md)
