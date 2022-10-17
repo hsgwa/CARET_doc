@@ -1,21 +1,24 @@
 # Tracepoints definition
 
 This section lists all tracepoints and their definition.
-Before listing tracepoints.
 
-Some tracepoints are used for collecting identification of executors, nodes, callbacks, and topics during application's initialization. They are called initialization tracepoints. The other tracepoints are embedded for sampling timestamps after completion of initialization, and called runtime tracepoints.
+Some tracepoints are used for collecting identification of executors, nodes, callbacks, and topics during application's initialization.
+They are called initialization tracepoints. The other tracepoints are embedded for sampling timestamps after completion of initialization, and called runtime tracepoints.
 
-Almost all of tracepoints supported by CARET are embedded in ROS and DDS layer. CARET utilizes some of the tracepoints embedded in original ROS 2 middleware, which are used for ros2-tracing. Some of the rest tracepoints are added to the fork of ROS 2's rclcpp, the other are introduced by function hooking with LD_PRELOAD. AS explained, tracepoints for CARET is embedded by three ways and they are identified as below.
+Each tracepoint for CARET is added by followings method.
 
 ![builtin_and_extended_tracepoints](../../imgs/builtin_and_exntended_trace_points.drawio.png)
 
-- Builtin tracepoints
+- Built-in tracepoints
   - tracepoints embedded in original ROS 2 middleware which are utilized by ros2-tracing
-  - some of tracepoints, for service, action and lifecycle node, are not utilized by CARET
-- Extended tracepoints
-  - CARET-dedicated tracepoints added to the fork of rclcpp
+  - some of tracepoints, for service, action and lifecycle node, are not utilized by current CARET
 - Hooked tracepoints
   - CARET-dedicated tracepoints introduced by function hooking with LD_PRELOAD
+- Extended tracepoints
+  - CARET-dedicated tracepoints added to the fork of rclcpp
+
+CARET utilizes some of the tracepoints built-in original ROS 2.
+Some of the tracepoints are added by hooking with LD_PRELOAD, and rest trace points are added to the fork of ROS 2's rclcpp.
 
 <prettier-ignore-start>
 !!! info

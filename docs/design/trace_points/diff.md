@@ -2,47 +2,44 @@
 
 ## v0.2 vs galactic
 
-[caret.repos](https://github.com/tier4/caret/blob/main/caret.repos) には caret のリポジトリの他に、以下のリポジトリを含んでいます。
+In addition to the caret repository, [caret.repos](https://github.com/tier4/caret/blob/main/caret.repos) contains the following repositories
 
 - <https://github.com/ros2/rcl.git>
 - <https://github.com/tier4/rclcpp/tree/galactic_tracepoint_added>
 - <https://github.com/tier4/ros2_tracing/tree/galactic_tracepoint_added>
 
-それぞれのリポジトリの差分について説明します。
+This section describes the differences between each repository.
 
 ### rcl
 
-ソースコードの変更なし。
-トレースポイントを有効にするための再ビルド。
+No source code changes.
+Cloning this package is for enabling built-in trace points by rebuilding.
 
 ### rclcpp
 
-リポジトリ：<https://github.com/tier4/rclcpp/tree/galactic_tracepoint_added>
+This cloning is for adding trace point which cannot added by LD_PRELOAD.
 
-追加したトレースポイントについては、[トレースポイントの定義](../trace_points/)の **[CARET フォーク実装]**となります。
+See also
 
-> rclcpp 実装の理由
->
-> 上記トレースポイントはテンプレートで実装された関数内に挿入しています。  
-> テンプレート実装はヘッダーに含まれ、アプリケーションのバイナリ内に生成されます  
-> LD_PRELOAD でのフックが不可能な測定箇所なため、 rclcpp にトレースポイントの追加しています。
+- [Tracepoints](../trace_points/)
 
-また、ビルドを通すために ros2_tracing の include ファイルを追加しています。
+It's needed to add include directory of ros2_tracing.
 
-> rclcpp に ros2_tracing の include ファイルを追加した理由
->
-> LD_PRELOAD では実行開始直後にカスタムの共有ライブラリを優先して読み込ませることが可能になります。  
-> 一方で、上記のようなヘッダーに追加されたトレースポイントには、ビルド時のヘッダー探索にトレースポイント追加版ヘッダーが優先して読み込まれる必要あります。  
-> gcc の -I フラグや CPATH などを検討しましたが、トレースポイント追加版 rclcpp/include, /opt/ros/galactic/include （ros2_tracing 含む）,トレースポイント追加版 tracetools/include の順となり、追加したトレースポイント未定義のエラーでビルドが通せません。  
-> そのため、 トレースポイント追加版 tracetools/include に追加されていないトレースポイントは、一時的に rclcpp/include 配下に追加しました。  
-> ros2 本家へのトレースポイントのマージを検討していく際には、rclcpp への ros2_tracing の include ファイル追加は必要ありません。
+<prettier-ignore-start>
+!!! info
+    Reason to add include files of ros2_tracing to rclcpp.
+    LD_PRELOAD allows custom shared libraries to be loaded with priority immediately after the start of execution.  
+    On the other hand, tracepoints added to the header as described above require that the tracepoint-added version of the header be loaded first during header searching at build time.  
+    An include file is added to ensure that this priority is as expected.
+    When the merging of tracepoints to the ros2 mainframe, the addition of the ros2_tracing include file to rclcpp is not necessary.
+<prettier-ignore-end>
 
 ### ros2_tracing
 
-rclcpp で追加したトレースポイントの定義を追加
-
-リポジトリ：<https://github.com/tier4/ros2_tracing/tree/galactic_tracepoint_added>
-
-フックではなく、rclcpp へトレースポイントを追加した理由については、「rclcpp 実装の理由」を参照。
+This cloning is for defining tracepoints added to rclcpp.
 
 ## v0.3 vs humble
+
+In v0.3, the trace points used in the galactic version of CARET have been ported.
+Some tracepoints have been added in humble, but they are not currently supported.
+These tracepoints will be supported in a future version.

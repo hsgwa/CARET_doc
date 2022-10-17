@@ -1,6 +1,8 @@
 # Publisher
 
-Publisher が publish する際の時間や関連する情報を提供します。
+The Publisher provides the time and relevant information when publishing.
+
+A simplified sequence diagram focusing only on the relevant data flow is shown below.
 
 ```plantuml
 @startuml
@@ -54,7 +56,7 @@ deactivate UserCode
 @enduml
 ```
 
-Related tracepoints
+`to_dataframe` API returns following columns.
 
 | column                         | column type               | description                                                   |
 | ------------------------------ | ------------------------- | ------------------------------------------------------------- |

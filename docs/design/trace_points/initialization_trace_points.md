@@ -1,5 +1,5 @@
-Some tracepoints share a same identification, such as a node ID (`node_handle`) and an address of callback instance.
-The shared identification associates each tracepoint to another, the association constructs structure of tracepoint relationship.
+Some tracepoints share same addresses (e.g. node_handle and callback address).
+By binding these addresses, CARET constructs structures of each trace point relationship.
 
 ### Relationships for each initialization trace points
 
@@ -155,16 +155,13 @@ erDiagram
 
 ```
 
-If a certain of address of callback instance is unique, scanning the shared identification including `timer_callback_added` lets you identify a node to which the callback belongs.
-On the other hand, if `node_handle` is identified uniquely, callback in the node is identified as well.
-
 ### Tracepoints for representing structure of executor and callback group
 
 A handler such as `timer_handle` and `subscription_handle` are assigned to a callback group. A callback group belongs to an executor.
 
 ### ros2:rcl_init
 
-[Original tracepoints]
+[Built-in tracepoints]
 
 Sampled items
 
@@ -174,7 +171,7 @@ Sampled items
 
 ### ros2:rcl_node_init
 
-[Original tracepoints]
+[Built-in tracepoints]
 
 Sampled items
 
@@ -187,7 +184,7 @@ Sampled items
 
 ### ros2:rcl_publisher_init
 
-[Original tracepoints]
+[Built-in tracepoints]
 
 Sampled items
 
@@ -201,7 +198,7 @@ Sampled items
 
 ### ros2:rcl_subscription_init
 
-[Original tracepoints]
+[Built-in tracepoints]
 
 Sampled items
 
@@ -215,7 +212,7 @@ Sampled items
 
 ### ros2:rclcpp_subscription_init
 
-[Original tracepoints]
+[Built-in tracepoints]
 
 Sampled items
 
@@ -226,7 +223,7 @@ Sampled items
 
 ### ros2:rclcpp_subscription_callback_added
 
-[Original tracepoints]
+[Built-in tracepoints]
 
 Sampled items
 
@@ -237,7 +234,7 @@ Sampled items
 
 ### ros2:rcl_timer_init
 
-[Original tracepoints]
+[Built-in tracepoints]
 
 Sampled items
 
@@ -248,7 +245,7 @@ Sampled items
 
 ### ros2:rclcpp_timer_callback_added
 
-[Original tracepoints]
+[Built-in tracepoints]
 
 Sampled items
 
@@ -259,7 +256,7 @@ Sampled items
 
 ### ros2:rclcpp_timer_link_node
 
-[Original tracepoints]
+[Built-in tracepoints]
 
 Sampled items
 
@@ -270,7 +267,7 @@ Sampled items
 
 ### ros2:rclcpp_callback_register
 
-[Original tracepoints]
+[Built-in tracepoints]
 
 Sampled items
 

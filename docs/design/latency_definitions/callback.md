@@ -1,6 +1,12 @@
 # Callback
 
-コールバックの開始時刻から終了時刻までの時間差です。
+The callback latency is the time from callback start to callback end.
+
+$$
+l_{\rm{callback}} = t_{\rm{callback\ end}} - t_{\rm{callback\ start}}
+$$
+
+A simplified sequence diagram focusing only on the relevant data flow is shown below.
 
 ```plantuml
 
@@ -20,11 +26,7 @@ deactivate Callback
 Rclcpp -> LTTng : callback end
 ```
 
-ここで、コールバックのレイテンシは callback start から callback end までの時間です。
-
-$$
-l_{\rm{callback}} = t_{\rm{callback\ end}} - t_{\rm{callback\ start}}
-$$
+`to_dataframe` API returns following columns.
 
 | trace points                                                                 | description         |
 | ---------------------------------------------------------------------------- | ------------------- |

@@ -2,6 +2,8 @@
 
 ## Inter process communication
 
+A simplified sequence diagram focusing only on the relevant data flow is shown below.
+
 ```plantuml
 @startuml
 title: Definition of major tracepoints

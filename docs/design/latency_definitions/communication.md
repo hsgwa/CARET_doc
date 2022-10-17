@@ -25,6 +25,8 @@ $$
 
 TODO: 処理のシーケンスを正しく直す。
 
+A simplified sequence diagram focusing only on the relevant data flow is shown below.
+
 ```plantuml
 
 
@@ -70,6 +72,8 @@ activate Callback
 ```
 
 ## プロセス間通信
+
+A simplified sequence diagram focusing only on the relevant data flow is shown below.
 
 ```plantuml
 @startuml

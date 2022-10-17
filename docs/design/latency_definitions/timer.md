@@ -1,6 +1,8 @@
 # Timer
 
-Timer callback が起床するの時間や関連する情報を提供します。
+Timer provides the time at which the Timer callback wakes up and related information.
+
+A simplified sequence diagram focusing only on the relevant data flow is shown below.
 
 ```plantuml
 @startuml
